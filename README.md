@@ -3,13 +3,13 @@
 
 ## 截图
 ![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar.gif)
-\<br>
+<br>
 ![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_001.png)
- \<br>
+<br>
 ![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_002.png)
-\<br>
+<br>
 ![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_003.png)
-\<br>
+<br>
 
 
 ## 如何添加
