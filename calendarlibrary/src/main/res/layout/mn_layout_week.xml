@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="36dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tv_week_01"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="日"
+        android:textColor="@color/mn_calendar_color_text_week"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_week_02"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="一"
+        android:textColor="@color/mn_calendar_color_text_week"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_week_03"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="二"
+        android:textColor="@color/mn_calendar_color_text_week"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_week_04"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="三"
+        android:textColor="@color/mn_calendar_color_text_week"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_week_05"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="四"
+        android:textColor="@color/mn_calendar_color_text_week"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_week_06"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="五"
+        android:textColor="@color/mn_calendar_color_text_week"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_week_07"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="六"
+        android:textColor="@color/mn_calendar_color_text_week"
+        android:textSize="12sp" />
+
+</LinearLayout>
