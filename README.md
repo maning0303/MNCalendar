@@ -2,10 +2,10 @@
 一个简单的日历控件
 
 ## 截图
-![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar.gif)
-![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_001.png)
-![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_002.png)
-![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_003.png)
+        ![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar.gif)
+        ![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_001.png)
+        ![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_002.png)
+        ![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_003.png)
 
 
 ## 如何添加
