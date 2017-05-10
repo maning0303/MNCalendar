@@ -2,6 +2,7 @@
 一个简单的日历控件
 
 ## 截图
+![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar.gif)
 ![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_001.png)
 ![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_002.png)
 ![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_003.png)
@@ -72,7 +73,7 @@
                             .setMnCalendar_colorTitle("#FF0000")        //标题的颜色(包括文字和左右箭头)
                             .setMnCalendar_showLunar(true)              //是不是显示阴历
                             .setMnCalendar_showWeek(true)               //是不是显示星期栏
-                            .setMnCalendar_showTitle(true)             //是不是显示标题栏
+                            .setMnCalendar_showTitle(true)              //是不是显示标题栏
                             .build();
     mnCalendar.setConfig(build);
 
