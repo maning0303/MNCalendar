@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval"
+    android:useLevel="false">
+
+    <solid android:color="@color/mn_calendar_color_today_bg" />
+
+    <size
+        android:width="15dp"
+        android:height="15dp" />
+
+</shape>

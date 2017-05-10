@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+    <declare-styleable name="MNCalendar">
+        &lt;!&ndash;日历是否显示阴历 : true-显示,false-不显示 (默认显示)&ndash;&gt;
+        <attr name="mnCalendar_showLunar" format="boolean" />
+        &lt;!&ndash;日历是否显示星期一栏 : true-显示,false-不显示 (默认显示) &ndash;&gt;
+        <attr name="mnCalendar_showWeek" format="boolean" />
+        &lt;!&ndash;日历星期的颜色值&ndash;&gt;
+        <attr name="mnCalendar_colorWeek" format="color" />
+        &lt;!&ndash;日历Item的阳历的颜色值&ndash;&gt;
+        <attr name="mnCalendar_colorSolar" format="color" />
+        &lt;!&ndash;日历Item的阴历的颜色值&ndash;&gt;
+        <attr name="mnCalendar_colorLunar" format="color" />
+        &lt;!&ndash;日历今天圆形背景&ndash;&gt;
+        <attr name="mnCalendar_colorTodayBg" format="color" />
+        &lt;!&ndash;日历不是当前月份的阳历的颜色&ndash;&gt;
+        <attr name="mnCalendar_colorOtherMonth" format="color" />
+        &lt;!&ndash;日历今天圆形背景上的文字的颜色&ndash;&gt;
+        <attr name="mnCalendar_colorTodayText" format="color" />
+    </declare-styleable>
+    -->
+
+</resources>
