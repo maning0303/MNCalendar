@@ -23,6 +23,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
     private Context context;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+    private SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
     private MNCalendar mnCalendar;
 
     @Override
@@ -38,9 +39,15 @@ public class MainActivity extends AppCompatActivity {
          * Item点击监听
          */
         mnCalendar.setOnCalendarItemClickListener(new OnCalendarItemClickListener() {
+
             @Override
-            public void onCalendarItemClick(Date date) {
-                Toast.makeText(context, "点击了:" + sdf.format(date), Toast.LENGTH_SHORT).show();
+            public void onClick(Date date) {
+                Toast.makeText(context, "单击:" + sdf2.format(mnCalendar.getCurrentDate()), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLongClick(Date date) {
+                Toast.makeText(context, "长按:" + sdf2.format(mnCalendar.getCurrentDate()), Toast.LENGTH_SHORT).show();
             }
         });
 

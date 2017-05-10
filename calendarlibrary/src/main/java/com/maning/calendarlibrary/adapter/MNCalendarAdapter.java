@@ -111,7 +111,16 @@ public class MNCalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     @Override
                     public void onClick(View view) {
                         Date datePosition = mDatas.get(position);
-                        onCalendarItemClickListener.onCalendarItemClick(datePosition);
+                        onCalendarItemClickListener.onClick(datePosition);
+                    }
+                });
+
+                myViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        Date datePosition = mDatas.get(position);
+                        onCalendarItemClickListener.onLongClick(datePosition);
+                        return true;
                     }
                 });
             }

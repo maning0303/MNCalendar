@@ -38,15 +38,21 @@
 
 ``` java
 
-    /**
-     * Item点击监听
-     */
-    mnCalendar.setOnCalendarItemClickListener(new OnCalendarItemClickListener() {
-        @Override
-        public void onCalendarItemClick(Date date) {
-            Toast.makeText(context, "点击了:" + sdf.format(date), Toast.LENGTH_SHORT).show();
-        }
-    });
+     /**
+      * Item点击监听
+      */
+     mnCalendar.setOnCalendarItemClickListener(new OnCalendarItemClickListener() {
+
+         @Override
+         public void onClick(Date date) {
+             Toast.makeText(context, "单击:" + sdf2.format(mnCalendar.getCurrentDate()), Toast.LENGTH_SHORT).show();
+         }
+
+         @Override
+         public void onLongClick(Date date) {
+             Toast.makeText(context, "长按:" + sdf2.format(mnCalendar.getCurrentDate()), Toast.LENGTH_SHORT).show();
+         }
+     });
 
     /**
      * 日历改变监听

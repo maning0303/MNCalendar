@@ -8,6 +8,8 @@ import java.util.Date;
 
 public interface OnCalendarItemClickListener {
 
-    void onCalendarItemClick(Date date);
+    void onClick(Date date);
+
+    void onLongClick(Date date);
 
 }
