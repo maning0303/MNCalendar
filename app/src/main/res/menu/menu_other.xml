@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <item
+        android:id="@+id/action_01"
+        android:orderInCategory="100"
+        android:title="改变颜色"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_02"
+        android:orderInCategory="100"
+        android:title="隐藏星期栏"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_03"
+        android:orderInCategory="100"
+        android:title="隐藏阴历"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_04"
+        android:orderInCategory="100"
+        android:title="恢复默认"
+        app:showAsAction="never" />
+
+</menu>

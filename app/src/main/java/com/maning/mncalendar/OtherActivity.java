@@ -1,0 +1,91 @@
+package com.maning.mncalendar;
+
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.maning.calendarlibrary.MNCalendarVertical;
+import com.maning.calendarlibrary.listeners.OnCalendarRangeChooseListener;
+import com.maning.calendarlibrary.model.MNCalendarConfig;
+import com.maning.calendarlibrary.model.MNCalendarVerticalConfig;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class OtherActivity extends AppCompatActivity {
+
+    private Context context;
+
+    private MNCalendarVertical mnCalendarVertical;
+
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_other);
+        context = this;
+
+        mnCalendarVertical = (MNCalendarVertical) findViewById(R.id.mnCalendarVertical);
+
+        mnCalendarVertical.setOnCalendarRangeChooseListener(new OnCalendarRangeChooseListener() {
+            @Override
+            public void onRangeDate(Date startDate, Date endDate) {
+                String startTime = sdf.format(startDate);
+                String endTime = sdf.format(endDate);
+                Toast.makeText(context, "开始日期:" + startTime + ",结束日期:" + endTime, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_other, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_01:
+                //改变颜色样式
+                MNCalendarVerticalConfig mnCalendarVerticalConfig = new MNCalendarVerticalConfig.Builder()
+                        .setMnCalendar_showWeek(true)
+                        .setMnCalendar_titleFormat("yyyy-MM")
+                        .setMnCalendar_colorTitle("#FF0000")
+                        .setMnCalendar_colorSolar("#ff0fc7")
+                        .setMnCalendar_colorBeforeToday("#F1EDBD")
+                        .setMnCalendar_colorRangeBg("#9930C553")
+                        .setMnCalendar_colorRangeText("#000000")
+                        .setMnCalendar_colorStartAndEndBg("#258C3E")
+                        .setMnCalendar_colorWeek("#B07219")
+                        .setMnCalendar_countMonth(3)
+                        .build();
+                mnCalendarVertical.setConfig(mnCalendarVerticalConfig);
+                break;
+            case R.id.action_02:
+                //隐藏星期
+                MNCalendarVerticalConfig mnCalendarVerticalConfig2 = new MNCalendarVerticalConfig.Builder()
+                        .setMnCalendar_showWeek(false)
+                        .build();
+                mnCalendarVertical.setConfig(mnCalendarVerticalConfig2);
+                break;
+            case R.id.action_03:
+
+                break;
+            case R.id.action_04:
+                //恢复默认
+                MNCalendarVerticalConfig mnCalendarVerticalConfig4 = new MNCalendarVerticalConfig.Builder().build();
+                mnCalendarVertical.setConfig(mnCalendarVerticalConfig4);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+}
