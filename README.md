@@ -1,5 +1,5 @@
 # MNCalendar
-一个简单的日历控件
+一个简单的日历控件,高度颜色自定义,水平方向和垂直方向,支持手势滑动,支持区间范围选择
 [![](https://jitpack.io/v/maning0303/MNCalendar.svg)](https://jitpack.io/#maning0303/MNCalendar)
 
 ## 截图
