@@ -1,5 +1,6 @@
 # MNCalendar
 一个简单的日历控件
+[![](https://jitpack.io/v/maning0303/MNCalendar.svg)](https://jitpack.io/#maning0303/MNCalendar)
 
 ## 截图
 ### 水平方向日历
