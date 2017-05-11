@@ -17,8 +17,27 @@
 
 
 ## 如何添加
-### 源码Model添加：
-#### 1.直接关联calendarlibrary
+### 1:Gradle添加：
+#### 1.在Project的build.gradle中添加仓库地址
+
+``` gradle
+	allprojects {
+		repositories {
+			...
+			maven { url "https://jitpack.io" }
+		}
+	}
+```
+
+#### 2.在app目录下的build.gradle中添加依赖
+``` gradle
+	dependencies {
+	     compile 'com.github.maning0303:MNCalendar:V1.0.0'
+	}
+```
+
+### 2:源码Model添加：
+#### 直接关联calendarlibrary
 
 ``` gradle
 
