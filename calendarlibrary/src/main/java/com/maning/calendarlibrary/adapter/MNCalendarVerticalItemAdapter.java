@@ -93,6 +93,21 @@ public class MNCalendarVerticalItemAdapter extends RecyclerView.Adapter<Recycler
                 myViewHolder.itemView.setVisibility(View.GONE);
             }
 
+            //阴历的显示
+            if (mnCalendarVerticalConfig.isMnCalendar_showLunar()) {
+                myViewHolder.tv_small.setVisibility(View.VISIBLE);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(datePosition);
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH) + 1;
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                LunarCalendarUtils.Lunar solarToLunar = LunarCalendarUtils.solarToLunar(new LunarCalendarUtils.Solar(year, month, day));
+                String lunarDayString = LunarCalendarUtils.getLunarDayString(solarToLunar.lunarDay);
+                myViewHolder.tv_small.setText(lunarDayString);
+            } else {
+                myViewHolder.tv_small.setVisibility(View.GONE);
+            }
+
             //判断是不是当天
             String position_yyy_MM_dd = sdf.format(datePosition);
             if (now_yyy_mm_dd.equals(position_yyy_MM_dd)) {

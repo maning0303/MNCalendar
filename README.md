@@ -2,14 +2,18 @@
 一个简单的日历控件
 
 ## 截图
-![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar.gif)
+### 水平方向日历
+![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/mn_calendar_gif01.gif)
 <br>
 ![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_001.png)
-<br>
 ![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_002.png)
+
+### 垂直方向日历
+
+![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/mn_calendar_gif02.gif)
 <br>
-![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_003.png)
-<br>
+![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/mn_calendar_verfical_01.png)
+![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/mn_calendar_verfical_02.png)
 
 
 ## 如何添加
@@ -22,7 +26,7 @@
 
 ```
 
-## 使用方法:
+## 水平日历使用方法:
 
 ### 1:XML添加:
 ``` java
@@ -34,7 +38,7 @@
 
 ```
 
-### 2:使用方法:
+### 2:代码使用:
 
 ``` java
 
@@ -90,3 +94,61 @@
 ```
 
 ### 3:其它方法查看Demo详情
+
+# -------------------------华丽分割线--------------------------------
+
+## 垂直日历使用方法:
+
+### 1:XML添加:
+``` java
+
+    <com.maning.calendarlibrary.MNCalendarVertical
+            android:id="@+id/mnCalendarVertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+```
+
+### 2:代码使用:
+
+``` java
+
+     /**
+      * 区间选取完成监听
+      */
+     mnCalendarVertical.setOnCalendarRangeChooseListener(new OnCalendarRangeChooseListener() {
+         @Override
+         public void onRangeDate(Date startDate, Date endDate) {
+             String startTime = sdf.format(startDate);
+             String endTime = sdf.format(endDate);
+             Toast.makeText(context, "开始日期:" + startTime + ",结束日期:" + endTime, Toast.LENGTH_SHORT).show();
+         }
+     });
+
+
+    /**
+     *  自定义设置相关
+     */
+     MNCalendarVerticalConfig mnCalendarVerticalConfig = new MNCalendarVerticalConfig.Builder()
+             .setMnCalendar_showWeek(true)                   //是否显示星期栏
+             .setMnCalendar_showLunar(true)                  //是否显示阴历
+             .setMnCalendar_colorWeek("#B07219")             //星期栏的颜色
+             .setMnCalendar_titleFormat("yyyy-MM")           //每个月的标题样式
+             .setMnCalendar_colorTitle("#FF0000")            //每个月标题的颜色
+             .setMnCalendar_colorSolar("#ff0fc7")            //阳历的颜色
+             .setMnCalendar_colorLunar("#00ff00")            //阴历的颜色
+             .setMnCalendar_colorBeforeToday("#F1EDBD")      //今天之前的日期的颜色
+             .setMnCalendar_colorRangeBg("#9930C553")        //区间中间的背景颜色
+             .setMnCalendar_colorRangeText("#000000")        //区间文字的颜色
+             .setMnCalendar_colorStartAndEndBg("#258C3E")    //开始结束的背景颜色
+             .setMnCalendar_countMonth(3)                    //显示多少月(默认6个月)
+             .build();
+     mnCalendarVertical.setConfig(mnCalendarVerticalConfig);
+
+```
+
+### 3:其它方法查看Demo详情
+
+<br>
+## 感谢：
+###### [OneCalendarView](https://github.com/MorochoRochaDarwin/OneCalendarView)

@@ -1,6 +1,7 @@
 package com.maning.mncalendar;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,6 +33,9 @@ public class OtherActivity extends AppCompatActivity {
 
         mnCalendarVertical = (MNCalendarVertical) findViewById(R.id.mnCalendarVertical);
 
+        /**
+         * 区间选取完成监听
+         */
         mnCalendarVertical.setOnCalendarRangeChooseListener(new OnCalendarRangeChooseListener() {
             @Override
             public void onRangeDate(Date startDate, Date endDate) {
@@ -54,18 +58,23 @@ public class OtherActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_01:
-                //改变颜色样式
+
+                /**
+                 *  自定义设置相关
+                 */
                 MNCalendarVerticalConfig mnCalendarVerticalConfig = new MNCalendarVerticalConfig.Builder()
-                        .setMnCalendar_showWeek(true)
-                        .setMnCalendar_titleFormat("yyyy-MM")
-                        .setMnCalendar_colorTitle("#FF0000")
-                        .setMnCalendar_colorSolar("#ff0fc7")
-                        .setMnCalendar_colorBeforeToday("#F1EDBD")
-                        .setMnCalendar_colorRangeBg("#9930C553")
-                        .setMnCalendar_colorRangeText("#000000")
-                        .setMnCalendar_colorStartAndEndBg("#258C3E")
-                        .setMnCalendar_colorWeek("#B07219")
-                        .setMnCalendar_countMonth(3)
+                        .setMnCalendar_showWeek(true)                   //是否显示星期栏
+                        .setMnCalendar_showLunar(true)                  //是否显示阴历
+                        .setMnCalendar_colorWeek("#B07219")             //星期栏的颜色
+                        .setMnCalendar_titleFormat("yyyy-MM")           //每个月的标题样式
+                        .setMnCalendar_colorTitle("#FF0000")            //每个月标题的颜色
+                        .setMnCalendar_colorSolar("#ff0fc7")            //阳历的颜色
+                        .setMnCalendar_colorLunar("#00ff00")            //阴历的颜色
+                        .setMnCalendar_colorBeforeToday("#F1EDBD")      //今天之前的日期的颜色
+                        .setMnCalendar_colorRangeBg("#9930C553")        //区间中间的背景颜色
+                        .setMnCalendar_colorRangeText("#000000")        //区间文字的颜色
+                        .setMnCalendar_colorStartAndEndBg("#258C3E")    //开始结束的背景颜色
+                        .setMnCalendar_countMonth(3)                    //显示多少月(默认6个月)
                         .build();
                 mnCalendarVertical.setConfig(mnCalendarVerticalConfig);
                 break;
@@ -77,7 +86,11 @@ public class OtherActivity extends AppCompatActivity {
                 mnCalendarVertical.setConfig(mnCalendarVerticalConfig2);
                 break;
             case R.id.action_03:
-
+                //隐藏阴历
+                MNCalendarVerticalConfig mnCalendarVerticalConfig3 = new MNCalendarVerticalConfig.Builder()
+                        .setMnCalendar_showLunar(false)
+                        .build();
+                mnCalendarVertical.setConfig(mnCalendarVerticalConfig3);
                 break;
             case R.id.action_04:
                 //恢复默认
