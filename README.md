@@ -3,17 +3,17 @@
 
 ## 截图
 ### 水平方向日历
-![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/mn_calendar_gif01.gif)
+![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/mncalendar_gif01.gif)
 <br>
 ![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_001.png)
 ![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_002.png)
 
 ### 垂直方向日历
 
-![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/mn_calendar_gif02.gif)
+![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/mncalendar_gif02.gif)
 <br>
-![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/mn_calendar_verfical_01.png)
-![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/mn_calendar_verfical_02.png)
+![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/mn_calendar_vertical_01.png)
+![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/mn_calendar_vertical_02.png)
 
 
 ## 如何添加
