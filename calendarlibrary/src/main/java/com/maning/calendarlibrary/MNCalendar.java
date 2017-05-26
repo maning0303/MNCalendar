@@ -52,6 +52,8 @@ public class MNCalendar extends LinearLayout implements View.OnClickListener {
     private ImageView btn_left;
     private ImageView btn_right;
     private TextView tv_calendar_title;
+    //root
+    private LinearLayout ll_root;
 
 
     private OnCalendarItemClickListener onCalendarItemClickListener;
@@ -108,6 +110,7 @@ public class MNCalendar extends LinearLayout implements View.OnClickListener {
         btn_left = (ImageView) findViewById(R.id.btn_left);
         btn_right = (ImageView) findViewById(R.id.btn_right);
         tv_calendar_title = (TextView) findViewById(R.id.tv_calendar_title);
+        ll_root = (LinearLayout) findViewById(R.id.ll_root);
 
         //初始化RecycleerView
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 7);

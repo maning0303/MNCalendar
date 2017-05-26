@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/mn_calendar_color_gray_white" android:state_pressed="true"></item>  <!-- 点击后的字体颜色 -->
+    <item android:drawable="@color/mn_calendar_color_white"></item>    <!-- 默认字体颜色 -->
+</selector>

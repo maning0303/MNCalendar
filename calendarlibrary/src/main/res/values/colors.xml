@@ -16,4 +16,8 @@
     <!--不是当前月份的阳历的颜色-->
     <color name="mn_calendar_color_other_month">#979797</color>
 
+
+    <!--白灰色-->
+    <color name="mn_calendar_color_gray_white">#dfdfdf</color>
+
 </resources>
