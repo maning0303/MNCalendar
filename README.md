@@ -33,7 +33,7 @@
 #### 2.在app目录下的build.gradle中添加依赖
 ``` gradle
 	dependencies {
-	     compile 'com.github.maning0303:MNCalendar:V1.0.1'
+	     compile 'com.github.maning0303:MNCalendar:V1.0.2'
 	}
 ```
 
@@ -62,21 +62,41 @@
 
 ``` java
 
-     /**
-      * Item点击监听
-      */
-     mnCalendar.setOnCalendarItemClickListener(new OnCalendarItemClickListener() {
+        /**
+         * Item点击监听
+         */
+        mnCalendar.setOnCalendarItemClickListener(new OnCalendarItemClickListener() {
 
-         @Override
-         public void onClick(Date date) {
-             Toast.makeText(context, "单击:" + sdf2.format(mnCalendar.getCurrentDate()), Toast.LENGTH_SHORT).show();
-         }
+            @Override
+            public void onClick(Date date, Lunar lunar) {
+                //阳历转换阴历
+                //Lunar solarToLunar = LunarCalendarUtils.solarToLunar(date);
 
-         @Override
-         public void onLongClick(Date date) {
-             Toast.makeText(context, "长按:" + sdf2.format(mnCalendar.getCurrentDate()), Toast.LENGTH_SHORT).show();
-         }
-     });
+                //Toast日期
+                String launarString = lunar.lunarYear + "-" + lunar.lunarMonth + "-" + lunar.lunarDay;
+                Toast.makeText(context, "单击:\n阳历:" + sdf2.format(date) + "\n阴历:" + launarString, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLongClick(Date date) {
+                Toast.makeText(context, "长按:" + sdf2.format(date), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /**
+         * 日历改变监听
+         */
+        mnCalendar.setOnCalendarChangeListener(new OnCalendarChangeListener() {
+            @Override
+            public void lastMonth() {
+                Toast.makeText(context, sdf.format(mnCalendar.getCurrentDate()), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void nextMonth() {
+                Toast.makeText(context, sdf.format(mnCalendar.getCurrentDate()), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     /**
      * 日历改变监听
@@ -108,6 +128,7 @@
                             .setMnCalendar_showLunar(true)              //是不是显示阴历
                             .setMnCalendar_showWeek(true)               //是不是显示星期栏
                             .setMnCalendar_showTitle(true)              //是不是显示标题栏
+                            .setMnCalendar_TitleDateFormat("yyyy年MM月") //标题样式(默认:yyyy-MM)
                             .build();
     mnCalendar.setConfig(build);
 
@@ -168,6 +189,14 @@
 ```
 
 ### 3:其它方法查看Demo详情
+
+
+## 更新日志:
+#### V1.0.2:
+        1:水平日历单选增加阴历返回
+        2:水平日历标题样式增加自定义
+        3:垂直日历优化快速滑动卡顿问题
+
 
 
 ## 感谢：
