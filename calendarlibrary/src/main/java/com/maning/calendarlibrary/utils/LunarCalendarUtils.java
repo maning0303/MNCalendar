@@ -1,5 +1,11 @@
 package com.maning.calendarlibrary.utils;
 
+import com.maning.calendarlibrary.constant.MNConst;
+import com.maning.calendarlibrary.model.Lunar;
+import com.maning.calendarlibrary.model.Solar;
+
+import java.util.Date;
+
 /**
  * Created by Jimmy on 2017/1/9 0009.
  * 农历工具类
@@ -51,8 +57,9 @@ public class LunarCalendarUtils {
 
     /**
      * 传回农历year年month月的总天数
-     * @param year 要计算的年份
-     * @param month        要计算的月
+     *
+     * @param year  要计算的年份
+     * @param month 要计算的月
      * @return 传回天数
      */
     public static int daysInMonth(int year, int month) {
@@ -61,9 +68,10 @@ public class LunarCalendarUtils {
 
     /**
      * 传回农历year年month月的总天数
-     * @param year 要计算的年份
-     * @param month        要计算的月
-     * @param leap 当月是否是闰月
+     *
+     * @param year  要计算的年份
+     * @param month 要计算的月
+     * @param leap  当月是否是闰月
      * @return 传回天数，如果闰月是错误的，返回0.
      */
     public static int daysInMonth(int year, int month, boolean leap) {
@@ -215,6 +223,23 @@ public class LunarCalendarUtils {
     /**
      * 公历转农历
      */
+    public static Lunar solarToLunar(Date date) {
+        try {
+            String formatDate = MNConst.sdf_yyy_MM_dd.format(date);
+            String[] formatDates = formatDate.split("-");
+            int year = Integer.parseInt(formatDates[0]);
+            int month = Integer.parseInt(formatDates[1]);
+            int day = Integer.parseInt(formatDates[2]);
+            Solar solar = new Solar(year, month, day);
+            return solarToLunar(solar);
+        } catch (Exception e) {
+            return new Lunar();
+        }
+    }
+
+    /**
+     * 公历转农历
+     */
     public static Lunar solarToLunar(Solar solar) {
         Lunar lunar = new Lunar();
         int index = solar.solarYear - solar_1_1[0];
@@ -259,23 +284,5 @@ public class LunarCalendarUtils {
         return lunar;
     }
 
-    public static class Solar {
-        int solarDay;
-        int solarMonth;
-        int solarYear;
-
-        public Solar(int solarYear, int solarMonth, int solarDay) {
-            this.solarYear = solarYear;
-            this.solarMonth = solarMonth;
-            this.solarDay = solarDay;
-        }
-    }
-
-    public static class Lunar {
-        public boolean isLeap;
-        public int lunarDay;
-        public int lunarMonth;
-        public int lunarYear;
-    }
 
 }

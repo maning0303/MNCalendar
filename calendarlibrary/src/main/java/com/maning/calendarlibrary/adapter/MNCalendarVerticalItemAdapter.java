@@ -1,11 +1,8 @@
 package com.maning.calendarlibrary.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.maning.calendarlibrary.R;
+import com.maning.calendarlibrary.constant.MNConst;
+import com.maning.calendarlibrary.model.Lunar;
 import com.maning.calendarlibrary.model.MNCalendarVerticalConfig;
+import com.maning.calendarlibrary.model.Solar;
 import com.maning.calendarlibrary.utils.LunarCalendarUtils;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,7 +28,7 @@ import java.util.Date;
 
 public class MNCalendarVerticalItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final String TAG = "MNCalendar";
+
     private ArrayList<Date> mDatas;
 
     private LayoutInflater layoutInflater;
@@ -40,7 +39,6 @@ public class MNCalendarVerticalItemAdapter extends RecyclerView.Adapter<Recycler
 
     private MNCalendarVerticalAdapter adapter;
 
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private String now_yyy_mm_dd;
     private Date nowDate = new Date();
 
@@ -56,9 +54,9 @@ public class MNCalendarVerticalItemAdapter extends RecyclerView.Adapter<Recycler
         this.mnCalendarVerticalConfig = mnCalendarVerticalConfig;
         layoutInflater = LayoutInflater.from(this.context);
 
-        now_yyy_mm_dd = sdf.format(nowDate);
+        now_yyy_mm_dd = MNConst.sdf_yyy_MM_dd.format(nowDate);
         try {
-            nowDate = sdf.parse(now_yyy_mm_dd);
+            nowDate = MNConst.sdf_yyy_MM_dd.parse(now_yyy_mm_dd);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -101,7 +99,7 @@ public class MNCalendarVerticalItemAdapter extends RecyclerView.Adapter<Recycler
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH) + 1;
                 int day = cal.get(Calendar.DAY_OF_MONTH);
-                LunarCalendarUtils.Lunar solarToLunar = LunarCalendarUtils.solarToLunar(new LunarCalendarUtils.Solar(year, month, day));
+                Lunar solarToLunar = LunarCalendarUtils.solarToLunar(new Solar(year, month, day));
                 String lunarDayString = LunarCalendarUtils.getLunarDayString(solarToLunar.lunarDay);
                 myViewHolder.tv_small.setText(lunarDayString);
             } else {
@@ -109,7 +107,7 @@ public class MNCalendarVerticalItemAdapter extends RecyclerView.Adapter<Recycler
             }
 
             //判断是不是当天
-            String position_yyy_MM_dd = sdf.format(datePosition);
+            String position_yyy_MM_dd = MNConst.sdf_yyy_MM_dd.format(datePosition);
             if (now_yyy_mm_dd.equals(position_yyy_MM_dd)) {
                 myViewHolder.tvDay.setText("今天");
             }

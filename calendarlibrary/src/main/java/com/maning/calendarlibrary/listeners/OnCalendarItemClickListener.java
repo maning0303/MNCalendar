@@ -1,5 +1,7 @@
 package com.maning.calendarlibrary.listeners;
 
+import com.maning.calendarlibrary.model.Lunar;
+
 import java.util.Date;
 
 /**
@@ -8,7 +10,7 @@ import java.util.Date;
 
 public interface OnCalendarItemClickListener {
 
-    void onClick(Date date);
+    void onClick(Date date, Lunar lunar);
 
     void onLongClick(Date date);
 

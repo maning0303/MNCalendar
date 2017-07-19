@@ -11,12 +11,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.maning.calendarlibrary.adapter.MNCalendarAdapter;
+import com.maning.calendarlibrary.constant.MNConst;
 import com.maning.calendarlibrary.listeners.OnCalendarChangeListener;
 import com.maning.calendarlibrary.listeners.OnCalendarItemClickListener;
 import com.maning.calendarlibrary.model.MNCalendarConfig;
 import com.maning.calendarlibrary.view.MNGestureView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,10 +26,6 @@ import java.util.Date;
  */
 
 public class MNCalendar extends LinearLayout implements View.OnClickListener {
-
-    private static final String TAG = "MNCalendar";
-
-    private static SimpleDateFormat sdf_yyyy_MM = new SimpleDateFormat("yyyy-MM");
 
     private Context context;
 
@@ -143,7 +139,7 @@ public class MNCalendar extends LinearLayout implements View.OnClickListener {
         } else {
             rl_title_view.setVisibility(View.VISIBLE);
             //标题
-            tv_calendar_title.setText(sdf_yyyy_MM.format(getCurrentDate()));
+            tv_calendar_title.setText(MNConst.sdf_yyyy_MM.format(getCurrentDate()));
 
             //标题颜色值
             int mnCalendar_colorTitle = mnCalendarConfig.getMnCalendar_colorTitle();

@@ -10,11 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.maning.calendarlibrary.R;
+import com.maning.calendarlibrary.constant.MNConst;
 import com.maning.calendarlibrary.listeners.OnCalendarItemClickListener;
+import com.maning.calendarlibrary.model.Lunar;
 import com.maning.calendarlibrary.model.MNCalendarConfig;
+import com.maning.calendarlibrary.model.Solar;
 import com.maning.calendarlibrary.utils.LunarCalendarUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,9 +38,6 @@ public class MNCalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private MNCalendarConfig mnCalendarConfig;
 
     private Context context;
-
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
 
     public void setOnCalendarItemClickListener(OnCalendarItemClickListener onCalendarItemClickListener) {
         this.onCalendarItemClickListener = onCalendarItemClickListener;
@@ -80,8 +79,8 @@ public class MNCalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             //判断是不是当天
             Date nowDate = new Date();
-            String now_yyy_MM_dd = sdf.format(nowDate);
-            String position_yyy_MM_dd = sdf.format(datePosition);
+            String now_yyy_MM_dd = MNConst.sdf_yyy_MM_dd.format(nowDate);
+            String position_yyy_MM_dd = MNConst.sdf_yyy_MM_dd.format(datePosition);
             if (now_yyy_MM_dd.equals(position_yyy_MM_dd)) {
                 myViewHolder.iv_today_bg.setVisibility(View.VISIBLE);
                 myViewHolder.tvDay.setTextColor(mnCalendarConfig.getMnCalendar_colorTodayText());
@@ -99,7 +98,7 @@ public class MNCalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH) + 1;
                 int day = cal.get(Calendar.DAY_OF_MONTH);
-                LunarCalendarUtils.Lunar solarToLunar = LunarCalendarUtils.solarToLunar(new LunarCalendarUtils.Solar(year, month, day));
+                Lunar solarToLunar = LunarCalendarUtils.solarToLunar(new Solar(year, month, day));
                 String lunarDayString = LunarCalendarUtils.getLunarDayString(solarToLunar.lunarDay);
                 myViewHolder.tvDay_lunar.setText(lunarDayString);
             } else {
@@ -111,7 +110,8 @@ public class MNCalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     @Override
                     public void onClick(View view) {
                         Date datePosition = mDatas.get(position);
-                        onCalendarItemClickListener.onClick(datePosition);
+                        Lunar lunar = LunarCalendarUtils.solarToLunar(datePosition);
+                        onCalendarItemClickListener.onClick(datePosition,lunar);
                     }
                 });
 

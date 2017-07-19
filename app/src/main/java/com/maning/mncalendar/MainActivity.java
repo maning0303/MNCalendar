@@ -1,19 +1,16 @@
 package com.maning.mncalendar;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.maning.calendarlibrary.MNCalendar;
 import com.maning.calendarlibrary.listeners.OnCalendarChangeListener;
 import com.maning.calendarlibrary.listeners.OnCalendarItemClickListener;
+import com.maning.calendarlibrary.model.Lunar;
 import com.maning.calendarlibrary.model.MNCalendarConfig;
 
 import java.text.ParseException;
@@ -41,13 +38,16 @@ public class MainActivity extends AppCompatActivity {
         mnCalendar.setOnCalendarItemClickListener(new OnCalendarItemClickListener() {
 
             @Override
-            public void onClick(Date date) {
-                Toast.makeText(context, "单击:" + sdf2.format(mnCalendar.getCurrentDate()), Toast.LENGTH_SHORT).show();
+            public void onClick(Date date, Lunar lunar) {
+                //阳历转换阴历
+//                Lunar solarToLunar = LunarCalendarUtils.solarToLunar(date);
+                String launarString = lunar.lunarYear + "-" + lunar.lunarMonth + "-" + lunar.lunarDay;
+                Toast.makeText(context, "单击:\n阳历:" + sdf2.format(date) + "\n阴历:" + launarString, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onLongClick(Date date) {
-                Toast.makeText(context, "长按:" + sdf2.format(mnCalendar.getCurrentDate()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "长按:" + sdf2.format(date), Toast.LENGTH_SHORT).show();
             }
         });
 
