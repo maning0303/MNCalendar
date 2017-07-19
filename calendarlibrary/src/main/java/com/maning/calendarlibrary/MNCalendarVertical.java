@@ -10,12 +10,17 @@ import android.widget.TextView;
 
 import com.maning.calendarlibrary.adapter.MNCalendarVerticalAdapter;
 import com.maning.calendarlibrary.listeners.OnCalendarRangeChooseListener;
+import com.maning.calendarlibrary.model.Lunar;
+import com.maning.calendarlibrary.model.MNCalendarItemModel;
 import com.maning.calendarlibrary.model.MNCalendarVerticalConfig;
+import com.maning.calendarlibrary.utils.LunarCalendarUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 /**
  * Created by maning on 2017/5/10.
@@ -40,7 +45,8 @@ public class MNCalendarVertical extends LinearLayout {
 
     private MNCalendarVerticalConfig mnCalendarVerticalConfig = new MNCalendarVerticalConfig.Builder().build();
     private MNCalendarVerticalAdapter mnCalendarVerticalAdapter;
-    private HashMap<String, ArrayList<Date>> dataMap;
+//    private HashMap<String, ArrayList<Date>> dataMap;
+    private HashMap<String, ArrayList<MNCalendarItemModel>> dataMap;
 
     private OnCalendarRangeChooseListener onCalendarRangeChooseListener;
 
@@ -106,9 +112,42 @@ public class MNCalendarVertical extends LinearLayout {
         dataMap = new HashMap<>();
         //计算日期
         int mnCalendar_countMonth = mnCalendarVerticalConfig.getMnCalendar_countMonth();
+//        for (int i = 0; i < mnCalendar_countMonth; i++) {
+//            int count7 = 0;
+//            ArrayList<Date> mDatas = new ArrayList<>();
+//            Calendar calendar = (Calendar) currentCalendar.clone();
+//            calendar.add(Calendar.MONTH, i);
+//            //至于当月的第一天
+//            calendar.set(Calendar.DAY_OF_MONTH, 1);
+//            //获取当月第一天是星期几
+//            int day_of_week = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+//            //移动到需要绘制的第一天
+//            calendar.add(Calendar.DAY_OF_MONTH, -day_of_week);
+//            //6*7
+//            while (mDatas.size() < 6 * 7) {
+//                mDatas.add(calendar.getTime());
+//                //包含两个7就多了一行
+//                if (String.valueOf(calendar.getTime().getDate()).equals("7")) {
+//                    count7++;
+//                }
+//                //向前移动一天
+//                calendar.add(Calendar.DAY_OF_MONTH, 1);
+//            }
+//            if (count7 >= 2) {
+//                ArrayList<Date> mDatas2 = new ArrayList<>();
+//                for (int j = 0; j < mDatas.size() - 7; j++) {
+//                    mDatas2.add(mDatas.get(j));
+//                }
+//                mDatas = new ArrayList<>();
+//                mDatas.addAll(mDatas2);
+//            }
+//
+//            dataMap.put(String.valueOf(i), mDatas);
+//        }
+
         for (int i = 0; i < mnCalendar_countMonth; i++) {
             int count7 = 0;
-            ArrayList<Date> mDatas = new ArrayList<>();
+            ArrayList<MNCalendarItemModel> mDatas = new ArrayList<>();
             Calendar calendar = (Calendar) currentCalendar.clone();
             calendar.add(Calendar.MONTH, i);
             //至于当月的第一天
@@ -119,7 +158,10 @@ public class MNCalendarVertical extends LinearLayout {
             calendar.add(Calendar.DAY_OF_MONTH, -day_of_week);
             //6*7
             while (mDatas.size() < 6 * 7) {
-                mDatas.add(calendar.getTime());
+                Date date = calendar.getTime();
+                //阴历计算
+                Lunar lunar = LunarCalendarUtils.solarToLunar(date);
+                mDatas.add(new MNCalendarItemModel(date,lunar));
                 //包含两个7就多了一行
                 if (String.valueOf(calendar.getTime().getDate()).equals("7")) {
                     count7++;
@@ -128,7 +170,7 @@ public class MNCalendarVertical extends LinearLayout {
                 calendar.add(Calendar.DAY_OF_MONTH, 1);
             }
             if (count7 >= 2) {
-                ArrayList<Date> mDatas2 = new ArrayList<>();
+                ArrayList<MNCalendarItemModel> mDatas2 = new ArrayList<>();
                 for (int j = 0; j < mDatas.size() - 7; j++) {
                     mDatas2.add(mDatas.get(j));
                 }

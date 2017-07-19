@@ -1,19 +1,16 @@
 package com.maning.mncalendar;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.maning.calendarlibrary.MNCalendarVertical;
 import com.maning.calendarlibrary.listeners.OnCalendarRangeChooseListener;
-import com.maning.calendarlibrary.model.MNCalendarConfig;
 import com.maning.calendarlibrary.model.MNCalendarVerticalConfig;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -74,7 +71,7 @@ public class OtherActivity extends AppCompatActivity {
                         .setMnCalendar_colorRangeBg("#9930C553")        //区间中间的背景颜色
                         .setMnCalendar_colorRangeText("#000000")        //区间文字的颜色
                         .setMnCalendar_colorStartAndEndBg("#258C3E")    //开始结束的背景颜色
-                        .setMnCalendar_countMonth(3)                    //显示多少月(默认6个月)
+                        .setMnCalendar_countMonth(12)                    //显示多少月(默认6个月)
                         .build();
                 mnCalendarVertical.setConfig(mnCalendarVerticalConfig);
                 break;

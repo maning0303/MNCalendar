@@ -13,8 +13,8 @@ import android.widget.Toast;
 import com.maning.calendarlibrary.R;
 import com.maning.calendarlibrary.constant.MNConst;
 import com.maning.calendarlibrary.model.Lunar;
+import com.maning.calendarlibrary.model.MNCalendarItemModel;
 import com.maning.calendarlibrary.model.MNCalendarVerticalConfig;
-import com.maning.calendarlibrary.model.Solar;
 import com.maning.calendarlibrary.utils.LunarCalendarUtils;
 
 import java.text.ParseException;
@@ -29,7 +29,7 @@ import java.util.Date;
 public class MNCalendarVerticalItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
-    private ArrayList<Date> mDatas;
+    private ArrayList<MNCalendarItemModel> mDatas;
 
     private LayoutInflater layoutInflater;
 
@@ -46,7 +46,7 @@ public class MNCalendarVerticalItemAdapter extends RecyclerView.Adapter<Recycler
     private MNCalendarVerticalConfig mnCalendarVerticalConfig;
 
 
-    public MNCalendarVerticalItemAdapter(Context context, ArrayList<Date> mDatas, Calendar currentCalendar, MNCalendarVerticalAdapter adapter, MNCalendarVerticalConfig mnCalendarVerticalConfig) {
+    public MNCalendarVerticalItemAdapter(Context context, ArrayList<MNCalendarItemModel> mDatas, Calendar currentCalendar, MNCalendarVerticalAdapter adapter, MNCalendarVerticalConfig mnCalendarVerticalConfig) {
         this.context = context;
         this.mDatas = mDatas;
         this.currentCalendar = currentCalendar;
@@ -74,7 +74,10 @@ public class MNCalendarVerticalItemAdapter extends RecyclerView.Adapter<Recycler
         if (holder instanceof MyViewHolder) {
             MyViewHolder myViewHolder = (MyViewHolder) holder;
 
-            Date datePosition = mDatas.get(position);
+            MNCalendarItemModel mnCalendarItemModel = mDatas.get(position);
+
+            Date datePosition = mnCalendarItemModel.getDate();
+            Lunar lunar = mnCalendarItemModel.getLunar();
 
             myViewHolder.itemView.setVisibility(View.VISIBLE);
             myViewHolder.tv_small.setVisibility(View.GONE);
@@ -94,13 +97,7 @@ public class MNCalendarVerticalItemAdapter extends RecyclerView.Adapter<Recycler
             //阴历的显示
             if (mnCalendarVerticalConfig.isMnCalendar_showLunar()) {
                 myViewHolder.tv_small.setVisibility(View.VISIBLE);
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(datePosition);
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH) + 1;
-                int day = cal.get(Calendar.DAY_OF_MONTH);
-                Lunar solarToLunar = LunarCalendarUtils.solarToLunar(new Solar(year, month, day));
-                String lunarDayString = LunarCalendarUtils.getLunarDayString(solarToLunar.lunarDay);
+                String lunarDayString = LunarCalendarUtils.getLunarDayString(lunar.lunarDay);
                 myViewHolder.tv_small.setText(lunarDayString);
             } else {
                 myViewHolder.tv_small.setVisibility(View.GONE);
@@ -157,7 +154,9 @@ public class MNCalendarVerticalItemAdapter extends RecyclerView.Adapter<Recycler
             myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Date dateClick = mDatas.get(position);
+                    MNCalendarItemModel mnCalendarItemModel = mDatas.get(position);
+
+                    Date dateClick = mnCalendarItemModel.getDate();
 
                     //必须大于今天
                     if (dateClick.getTime() < nowDate.getTime()) {

@@ -14,6 +14,7 @@ import com.maning.calendarlibrary.R;
 import com.maning.calendarlibrary.listeners.OnCalendarItemClickListener;
 import com.maning.calendarlibrary.listeners.OnCalendarRangeChooseListener;
 import com.maning.calendarlibrary.model.MNCalendarConfig;
+import com.maning.calendarlibrary.model.MNCalendarItemModel;
 import com.maning.calendarlibrary.model.MNCalendarVerticalConfig;
 import com.maning.calendarlibrary.utils.LunarCalendarUtils;
 
@@ -29,7 +30,7 @@ import java.util.HashMap;
 
 public class MNCalendarVerticalAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private HashMap<String, ArrayList<Date>> mDatas;
+    private HashMap<String, ArrayList<MNCalendarItemModel>> mDatas;
 
     private LayoutInflater layoutInflater;
 
@@ -42,7 +43,7 @@ public class MNCalendarVerticalAdapter extends RecyclerView.Adapter<RecyclerView
     public Date startDate = null;
     public Date endDate = null;
 
-    public MNCalendarVerticalAdapter(Context context, HashMap<String, ArrayList<Date>> mDatas, Calendar currentCalendar, MNCalendarVerticalConfig mnCalendarVerticalConfig) {
+    public MNCalendarVerticalAdapter(Context context, HashMap<String, ArrayList<MNCalendarItemModel>> mDatas, Calendar currentCalendar, MNCalendarVerticalConfig mnCalendarVerticalConfig) {
         this.context = context;
         this.mDatas = mDatas;
         this.currentCalendar = currentCalendar;
@@ -76,7 +77,7 @@ public class MNCalendarVerticalAdapter extends RecyclerView.Adapter<RecyclerView
             myViewHolder.tv_item_title.setTextColor(mnCalendarVerticalConfig.getMnCalendar_colorTitle());
 
             //日期数据
-            ArrayList<Date> dates = mDatas.get(String.valueOf(position));
+            ArrayList<MNCalendarItemModel> dates = mDatas.get(String.valueOf(position));
             //初始化RecycleerView
             GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 7);
             myViewHolder.recyclerViewItem.setLayoutManager(gridLayoutManager);
@@ -122,7 +123,7 @@ public class MNCalendarVerticalAdapter extends RecyclerView.Adapter<RecyclerView
         }
     }
 
-    public void updateDatas(HashMap<String, ArrayList<Date>> mDatas, Calendar currentCalendar, MNCalendarVerticalConfig mnCalendarVerticalConfig) {
+    public void updateDatas(HashMap<String, ArrayList<MNCalendarItemModel>> mDatas, Calendar currentCalendar, MNCalendarVerticalConfig mnCalendarVerticalConfig) {
         this.mDatas = mDatas;
         this.currentCalendar = currentCalendar;
         this.mnCalendarVerticalConfig = mnCalendarVerticalConfig;
