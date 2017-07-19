@@ -30,7 +30,7 @@
     <item
         android:id="@+id/action_03"
         android:orderInCategory="100"
-        android:title="改变颜色"
+        android:title="改变样式颜色"
         app:showAsAction="never" />
 
     <item
@@ -55,6 +55,12 @@
         android:id="@+id/action_04"
         android:orderInCategory="100"
         android:title="恢复默认"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_12"
+        android:orderInCategory="100"
+        android:title="改变标题样式"
         app:showAsAction="never" />
 
 </menu>

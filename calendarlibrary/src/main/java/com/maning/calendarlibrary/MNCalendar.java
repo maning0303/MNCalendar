@@ -17,6 +17,7 @@ import com.maning.calendarlibrary.listeners.OnCalendarItemClickListener;
 import com.maning.calendarlibrary.model.MNCalendarConfig;
 import com.maning.calendarlibrary.view.MNGestureView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -138,8 +139,15 @@ public class MNCalendar extends LinearLayout implements View.OnClickListener {
             rl_title_view.setVisibility(View.GONE);
         } else {
             rl_title_view.setVisibility(View.VISIBLE);
-            //标题
-            tv_calendar_title.setText(MNConst.sdf_yyyy_MM.format(getCurrentDate()));
+            //标题默认样式
+            try {
+                String mnCalendar_titleDateFormat = mnCalendarConfig.getMnCalendar_titleDateFormat();
+                SimpleDateFormat sdf_yyyy_MM = new SimpleDateFormat(mnCalendar_titleDateFormat);
+                tv_calendar_title.setText(sdf_yyyy_MM.format(getCurrentDate()));
+            }catch (Exception e){
+                tv_calendar_title.setText(MNConst.sdf_yyyy_MM.format(getCurrentDate()));
+            }
+
 
             //标题颜色值
             int mnCalendar_colorTitle = mnCalendarConfig.getMnCalendar_colorTitle();

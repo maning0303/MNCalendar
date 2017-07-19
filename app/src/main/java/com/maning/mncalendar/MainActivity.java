@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(Date date, Lunar lunar) {
                 //阳历转换阴历
 //                Lunar solarToLunar = LunarCalendarUtils.solarToLunar(date);
+
+                //Toast日期
                 String launarString = lunar.lunarYear + "-" + lunar.lunarMonth + "-" + lunar.lunarDay;
                 Toast.makeText(context, "单击:\n阳历:" + sdf2.format(date) + "\n阴历:" + launarString, Toast.LENGTH_SHORT).show();
             }
@@ -78,6 +80,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_10:
+                //上个月
+                mnCalendar.setLastMonth();
+                break;
+            case R.id.action_11:
+                //下个月
+                mnCalendar.setNextMonth();
+                break;
             case R.id.action_01:
                 //跳转到当前月份
                 String newDateString = "2017-10";
@@ -90,9 +100,11 @@ public class MainActivity extends AppCompatActivity {
                 mnCalendar.setCurrentDate(date);
                 break;
             case R.id.action_02:
+                //跳转到今天
                 mnCalendar.set2Today();
                 break;
             case R.id.action_03:
+                //改变样式配置
                 MNCalendarConfig build = new MNCalendarConfig.Builder()
                         .setMnCalendar_colorWeek("#00ff00")
                         .setMnCalendar_colorLunar("#FF0000")
@@ -103,18 +115,14 @@ public class MainActivity extends AppCompatActivity {
                         .setMnCalendar_colorTitle("#FF0000")
                         .setMnCalendar_showLunar(true)
                         .setMnCalendar_showWeek(true)
+                        .setMnCalendar_TitleDateFormat("yyyy年MM月")
                         .build();
                 mnCalendar.setConfig(build);
                 break;
             case R.id.action_04:
+                //默认配置
                 MNCalendarConfig buildDefault = new MNCalendarConfig.Builder().build();
                 mnCalendar.setConfig(buildDefault);
-                break;
-            case R.id.action_10:
-                mnCalendar.setLastMonth();
-                break;
-            case R.id.action_11:
-                mnCalendar.setNextMonth();
                 break;
             case R.id.action_05:
                 MNCalendarConfig build05 = new MNCalendarConfig.Builder()
@@ -133,6 +141,12 @@ public class MainActivity extends AppCompatActivity {
                         .setMnCalendar_showLunar(false)
                         .build();
                 mnCalendar.setConfig(build07);
+                break;
+            case R.id.action_12:
+                MNCalendarConfig build12 = new MNCalendarConfig.Builder()
+                        .setMnCalendar_TitleDateFormat("MM月yyyy年")
+                        .build();
+                mnCalendar.setConfig(build12);
                 break;
         }
         return super.onOptionsItemSelected(item);

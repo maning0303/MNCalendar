@@ -24,6 +24,8 @@ public class MNCalendarConfig {
     <attr name="mnCalendar_colorOtherMonth" format="color" />
     <!--日历今天圆形背景上的文字的颜色-->
     <attr name="mnCalendar_colorTodayText" format="color" />
+    <!--日历标题显示的样式-->
+    <attr name="mnCalendar_titleDateFormat" format="String" />
     */
 
     private boolean mnCalendar_showLunar = true;
@@ -36,8 +38,17 @@ public class MNCalendarConfig {
     private int mnCalendar_colorOtherMonth = Color.parseColor("#979797");
     private int mnCalendar_colorTodayText = Color.parseColor("#FFFFFF");
     private int mnCalendar_colorTitle = Color.parseColor("#282828");
+    private String mnCalendar_titleDateFormat = "yyyy-MM";
 
     private MNCalendarConfig() {
+    }
+
+    public String getMnCalendar_titleDateFormat() {
+        return mnCalendar_titleDateFormat;
+    }
+
+    public void setMnCalendar_titleDateFormat(String mnCalendar_titleDateFormat) {
+        this.mnCalendar_titleDateFormat = mnCalendar_titleDateFormat;
     }
 
     public boolean isMnCalendar_showTitle() {
@@ -133,6 +144,7 @@ public class MNCalendarConfig {
                 ", mnCalendar_colorOtherMonth=" + mnCalendar_colorOtherMonth +
                 ", mnCalendar_colorTodayText=" + mnCalendar_colorTodayText +
                 ", mnCalendar_colorTitle=" + mnCalendar_colorTitle +
+                ", mnCalendar_titleDateFormat=" + mnCalendar_titleDateFormat +
                 '}';
     }
 
@@ -196,6 +208,11 @@ public class MNCalendarConfig {
 
         public Builder setMnCalendar_colorTitle(String mnCalendar_colorTitle) {
             this.mnCalendarConfig.setMnCalendar_colorTitle(Color.parseColor(mnCalendar_colorTitle));
+            return this;
+        }
+
+        public Builder setMnCalendar_TitleDateFormat(String mnCalendar_titleDateFormat) {
+            this.mnCalendarConfig.setMnCalendar_titleDateFormat(mnCalendar_titleDateFormat);
             return this;
         }
 
