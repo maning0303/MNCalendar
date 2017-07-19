@@ -37,7 +37,7 @@
 	}
 ```
 
-### 2:源码Model添加：
+### 2:源码Module添加：
 #### 直接关联calendarlibrary
 
 ``` gradle
