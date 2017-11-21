@@ -44,12 +44,12 @@ public class MainActivity extends AppCompatActivity {
 
                 //Toast日期
                 String launarString = lunar.lunarYear + "-" + lunar.lunarMonth + "-" + lunar.lunarDay;
-                Toast.makeText(context, "单击:\n阳历:" + sdf2.format(date) + "\n阴历:" + launarString, Toast.LENGTH_SHORT).show();
+                ToastUtil.showToast(context, "单击:\n阳历:" + sdf2.format(date) + "\n阴历:" + launarString);
             }
 
             @Override
-            public void onLongClick(Date date) {
-                Toast.makeText(context, "长按:" + sdf2.format(date), Toast.LENGTH_SHORT).show();
+            public void onLongClick(Date date, Lunar lunar) {
+                ToastUtil.showToast(context, "长按:" + sdf2.format(date));
             }
         });
 
@@ -58,13 +58,8 @@ public class MainActivity extends AppCompatActivity {
          */
         mnCalendar.setOnCalendarChangeListener(new OnCalendarChangeListener() {
             @Override
-            public void lastMonth() {
-                Toast.makeText(context, sdf.format(mnCalendar.getCurrentDate()), Toast.LENGTH_SHORT).show();
-            }
+            public void onPageChange(Date date) {
 
-            @Override
-            public void nextMonth() {
-                Toast.makeText(context, sdf.format(mnCalendar.getCurrentDate()), Toast.LENGTH_SHORT).show();
             }
         });
 

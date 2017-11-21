@@ -33,7 +33,10 @@ public class MNCalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private OnCalendarItemClickListener onCalendarItemClickListener;
 
+    //当前月份的日期
     private Calendar currentCalendar;
+    //选中的日期
+    private Calendar selectedCalendar;
 
     private MNCalendarConfig mnCalendarConfig;
 
@@ -43,13 +46,28 @@ public class MNCalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.onCalendarItemClickListener = onCalendarItemClickListener;
     }
 
-    public MNCalendarAdapter(Context context, ArrayList<Date> mDatas, Calendar currentCalendar, MNCalendarConfig mnCalendarConfig) {
+    public MNCalendarAdapter(Context context, ArrayList<Date> mDatas, Calendar currentCalendar, Calendar selectedCalendar, MNCalendarConfig mnCalendarConfig) {
         this.context = context;
         this.mDatas = mDatas;
         this.currentCalendar = currentCalendar;
+        this.selectedCalendar = selectedCalendar;
         this.mnCalendarConfig = mnCalendarConfig;
         layoutInflater = LayoutInflater.from(this.context);
+    }
 
+    public void updateDatas(ArrayList<Date> mDatas) {
+        this.mDatas = mDatas;
+        notifyDataSetChanged();
+    }
+
+    public void updateConfig(MNCalendarConfig mnCalendarConfig) {
+        this.mnCalendarConfig = mnCalendarConfig;
+        notifyDataSetChanged();
+    }
+
+    public void updateSelectedCalendar(Calendar selectedCalendar) {
+        this.selectedCalendar = selectedCalendar;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -64,6 +82,7 @@ public class MNCalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             MyViewHolder myViewHolder = (MyViewHolder) holder;
 
             Date datePosition = mDatas.get(position);
+            String position_yyy_MM_dd = MNConst.sdf_yyy_MM_dd.format(datePosition);
 
             myViewHolder.iv_today_bg.setVisibility(View.GONE);
             myViewHolder.tvDay_lunar.setVisibility(View.VISIBLE);
@@ -77,10 +96,21 @@ public class MNCalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 myViewHolder.tvDay.setTextColor(mnCalendarConfig.getMnCalendar_colorOtherMonth());
             }
 
+            //判断是不是选中状态
+            if (selectedCalendar != null) {
+                Date selectedDate = selectedCalendar.getTime();
+                String selected_yyy_MM_dd = MNConst.sdf_yyy_MM_dd.format(selectedDate);
+                if (selected_yyy_MM_dd.equals(position_yyy_MM_dd)) {
+                    myViewHolder.iv_today_bg.setVisibility(View.VISIBLE);
+                    //动态修改颜色
+                    GradientDrawable myGrad = (GradientDrawable) myViewHolder.iv_today_bg.getBackground();
+                    myGrad.setColor(context.getResources().getColor(R.color.mn_calendar_color_gray_white));
+                }
+            }
+
             //判断是不是当天
             Date nowDate = new Date();
             String now_yyy_MM_dd = MNConst.sdf_yyy_MM_dd.format(nowDate);
-            String position_yyy_MM_dd = MNConst.sdf_yyy_MM_dd.format(datePosition);
             if (now_yyy_MM_dd.equals(position_yyy_MM_dd)) {
                 myViewHolder.iv_today_bg.setVisibility(View.VISIBLE);
                 myViewHolder.tvDay.setTextColor(mnCalendarConfig.getMnCalendar_colorTodayText());
@@ -111,7 +141,12 @@ public class MNCalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     public void onClick(View view) {
                         Date datePosition = mDatas.get(position);
                         Lunar lunar = LunarCalendarUtils.solarToLunar(datePosition);
-                        onCalendarItemClickListener.onClick(datePosition,lunar);
+                        onCalendarItemClickListener.onClick(datePosition, lunar);
+                        //刷新界面
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(datePosition);
+                        selectedCalendar = calendar;
+                        notifyDataSetChanged();
                     }
                 });
 
@@ -119,7 +154,8 @@ public class MNCalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     @Override
                     public boolean onLongClick(View view) {
                         Date datePosition = mDatas.get(position);
-                        onCalendarItemClickListener.onLongClick(datePosition);
+                        Lunar lunar = LunarCalendarUtils.solarToLunar(datePosition);
+                        onCalendarItemClickListener.onLongClick(datePosition, lunar);
                         return true;
                     }
                 });

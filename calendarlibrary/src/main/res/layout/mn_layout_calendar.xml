@@ -64,6 +64,11 @@
 
     </LinearLayout>
 
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPagerCalendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <com.maning.calendarlibrary.view.MNGestureView
         android:id="@+id/mnGestureView"
         android:layout_width="match_parent"

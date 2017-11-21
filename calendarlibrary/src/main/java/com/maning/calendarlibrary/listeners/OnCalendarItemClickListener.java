@@ -12,6 +12,6 @@ public interface OnCalendarItemClickListener {
 
     void onClick(Date date, Lunar lunar);
 
-    void onLongClick(Date date);
+    void onLongClick(Date date, Lunar lunar);
 
 }

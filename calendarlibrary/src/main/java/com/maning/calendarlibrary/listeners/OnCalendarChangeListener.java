@@ -1,5 +1,7 @@
 package com.maning.calendarlibrary.listeners;
 
+import java.util.Date;
+
 /**
  * Created by maning on 2017/5/10.
  */
@@ -7,13 +9,10 @@ package com.maning.calendarlibrary.listeners;
 public interface OnCalendarChangeListener {
 
     /**
-     * 上个月
+     * 页面改变
+     *
+     * @param date
      */
-    void lastMonth();
-
-    /**
-     * 下个月
-     */
-    void nextMonth();
+    void onPageChange(Date date);
 
 }
