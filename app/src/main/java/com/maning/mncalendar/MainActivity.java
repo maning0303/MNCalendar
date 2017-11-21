@@ -39,17 +39,17 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(Date date, Lunar lunar) {
-                //阳历转换阴历
-//                Lunar solarToLunar = LunarCalendarUtils.solarToLunar(date);
-
                 //Toast日期
                 String launarString = lunar.lunarYear + "-" + lunar.lunarMonth + "-" + lunar.lunarDay;
-                ToastUtil.showToast(context, "单击:\n阳历:" + sdf2.format(date) + "\n阴历:" + launarString);
+                ToastUtil.showToast(context, "单击:阳历:" + sdf2.format(date) + ",阴历:" + launarString);
+
             }
 
             @Override
             public void onLongClick(Date date, Lunar lunar) {
-                ToastUtil.showToast(context, "长按:" + sdf2.format(date));
+                //Toast日期
+                String launarString = lunar.lunarYear + "-" + lunar.lunarMonth + "-" + lunar.lunarDay;
+                ToastUtil.showToast(context, "长按:阳历:" + sdf2.format(date) + ",阴历:" + launarString);
             }
         });
 
@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
         mnCalendar.setOnCalendarChangeListener(new OnCalendarChangeListener() {
             @Override
             public void onPageChange(Date date) {
-
+                String format = sdf.format(date);
+                ToastUtil.showToast(context, format);
             }
         });
 
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                         .setMnCalendar_colorTodayText("#000000")
                         .setMnCalendar_colorOtherMonth("#F1EDBD")
                         .setMnCalendar_colorTitle("#FF0000")
+                        .setMnCalendar_colorSelected("#FFFF00")
                         .setMnCalendar_showLunar(true)
                         .setMnCalendar_showWeek(true)
                         .setMnCalendar_TitleDateFormat("yyyy年MM月")

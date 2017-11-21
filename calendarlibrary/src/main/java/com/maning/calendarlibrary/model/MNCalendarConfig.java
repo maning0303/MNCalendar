@@ -40,6 +40,7 @@ public class MNCalendarConfig {
     private int mnCalendar_colorOtherMonth = Color.parseColor("#979797");
     private int mnCalendar_colorTodayText = Color.parseColor("#FFFFFF");
     private int mnCalendar_colorTitle = Color.parseColor("#282828");
+    private int mnCalendar_colorSelected = Color.parseColor("#dfdfdf");
     private String mnCalendar_titleDateFormat = "yyyy-MM";
 
     private MNCalendarConfig() {
@@ -133,6 +134,14 @@ public class MNCalendarConfig {
         this.mnCalendar_colorTitle = mnCalendar_colorTitle;
     }
 
+    public int getMnCalendar_colorSelected() {
+        return mnCalendar_colorSelected;
+    }
+
+    public void setMnCalendar_colorSelected(int mnCalendar_colorSelected) {
+        this.mnCalendar_colorSelected = mnCalendar_colorSelected;
+    }
+
     @Override
     public String toString() {
         return "MNCalendarConfig{" +
@@ -147,6 +156,7 @@ public class MNCalendarConfig {
                 ", mnCalendar_colorTodayText=" + mnCalendar_colorTodayText +
                 ", mnCalendar_colorTitle=" + mnCalendar_colorTitle +
                 ", mnCalendar_titleDateFormat=" + mnCalendar_titleDateFormat +
+                ", mnCalendar_colorSelected=" + mnCalendar_colorSelected +
                 '}';
     }
 
@@ -215,6 +225,11 @@ public class MNCalendarConfig {
 
         public Builder setMnCalendar_TitleDateFormat(String mnCalendar_titleDateFormat) {
             this.mnCalendarConfig.setMnCalendar_titleDateFormat(mnCalendar_titleDateFormat);
+            return this;
+        }
+
+        public Builder setMnCalendar_colorSelected(String mnCalendar_colorSelected) {
+            this.mnCalendarConfig.setMnCalendar_colorSelected(Color.parseColor(mnCalendar_colorSelected));
             return this;
         }
 
