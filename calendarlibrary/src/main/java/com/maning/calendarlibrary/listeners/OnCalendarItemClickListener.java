@@ -10,8 +10,8 @@ import java.util.Date;
 
 public interface OnCalendarItemClickListener {
 
-    void onClick(Date date, Lunar lunar);
+    void onClick(Date date);
 
-    void onLongClick(Date date, Lunar lunar);
+    void onLongClick(Date date);
 
 }

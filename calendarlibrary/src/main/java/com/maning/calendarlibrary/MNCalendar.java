@@ -19,10 +19,13 @@ import com.maning.calendarlibrary.listeners.OnCalendarItemClickListener;
 import com.maning.calendarlibrary.listeners.OnCalendarSelectedChangeListener;
 import com.maning.calendarlibrary.model.Lunar;
 import com.maning.calendarlibrary.model.MNCalendarConfig;
+import com.maning.calendarlibrary.model.MNCalendarEventModel;
 import com.maning.calendarlibrary.view.MNCalendarMonthPagerView;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -74,6 +77,9 @@ public class MNCalendar extends LinearLayout implements View.OnClickListener {
     //当前的日期
     private Calendar currentCalendar = Calendar.getInstance();
 
+    //事件集合
+    private ArrayList<MNCalendarEventModel> mEventDatas = new ArrayList<>();
+
     public MNCalendar(Context context) {
         this(context, null);
     }
@@ -104,6 +110,26 @@ public class MNCalendar extends LinearLayout implements View.OnClickListener {
         //绘制日期
         setCurrentPager();
 
+        try {
+            setEventDatas(this.mEventDatas);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setEventDatas(ArrayList<MNCalendarEventModel> mEventDatas) throws ParseException {
+        this.mEventDatas = mEventDatas;
+        if(this.mEventDatas == null){
+            this.mEventDatas = new ArrayList<>();
+        }
+
+        //刷新ViewPager页面
+        for (int i = 0; i < viewPagerCalendar.getChildCount(); i++) {
+            MNCalendarMonthPagerView view = (MNCalendarMonthPagerView) viewPagerCalendar.getChildAt(i);
+            if (view != null) {
+                view.updateEventDatas(mEventDatas);
+            }
+        }
     }
 
     private void initViews() {
@@ -234,7 +260,7 @@ public class MNCalendar extends LinearLayout implements View.OnClickListener {
             calendar.setTime(date);
             //绘制月份显示
             MNCalendarMonthPagerView calendarMonthPagerView = new MNCalendarMonthPagerView(context);
-            calendarMonthPagerView.setCurrentCalendar(calendar, mnCalendarConfig);
+            calendarMonthPagerView.setCurrentCalendar(calendar, mnCalendarConfig, mEventDatas);
             calendarMonthPagerView.setTag(position);
             calendarMonthPagerView.setSelectedCalendar(mSelectedCalendar);
             calendarMonthPagerView.setOnCalendarItemClickListener(new OnCalendarItemClickListener() {

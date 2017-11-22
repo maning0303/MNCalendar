@@ -1,6 +1,7 @@
 package com.maning.calendarlibrary.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.maning.calendarlibrary.listeners.OnCalendarItemClickListener;
 import com.maning.calendarlibrary.listeners.OnCalendarSelectedChangeListener;
 import com.maning.calendarlibrary.model.Lunar;
 import com.maning.calendarlibrary.model.MNCalendarConfig;
+import com.maning.calendarlibrary.model.MNCalendarEventModel;
 import com.maning.calendarlibrary.model.Solar;
 import com.maning.calendarlibrary.utils.LunarCalendarUtils;
 
@@ -27,8 +29,10 @@ import java.util.Date;
  */
 
 public class MNCalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+    //日期集合
     private ArrayList<Date> mDatas;
+    //事件集合
+    private ArrayList<MNCalendarEventModel> mEventDatas;
 
     private LayoutInflater layoutInflater;
 
@@ -39,8 +43,6 @@ public class MNCalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private Calendar currentCalendar;
     //选中的日期
     private Calendar selectedCalendar;
-
-    private int lastSelectedPosition;
 
     private MNCalendarConfig mnCalendarConfig;
 
@@ -54,13 +56,19 @@ public class MNCalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.onCalendarSelectedChangeListener = onCalendarSelectedChangeListener;
     }
 
-    public MNCalendarAdapter(Context context, ArrayList<Date> mDatas, Calendar currentCalendar, Calendar selectedCalendar, MNCalendarConfig mnCalendarConfig) {
+    public MNCalendarAdapter(Context context, ArrayList<Date> mDatas, ArrayList<MNCalendarEventModel> mEventDatas, Calendar currentCalendar, Calendar selectedCalendar, MNCalendarConfig mnCalendarConfig) {
         this.context = context;
         this.mDatas = mDatas;
+        this.mEventDatas = mEventDatas;
         this.currentCalendar = currentCalendar;
         this.selectedCalendar = selectedCalendar;
         this.mnCalendarConfig = mnCalendarConfig;
         layoutInflater = LayoutInflater.from(this.context);
+    }
+
+    public void updateEventDatas(ArrayList<MNCalendarEventModel> mEventDatas) {
+        this.mEventDatas = mEventDatas;
+        notifyDataSetChanged();
     }
 
     public void updateConfig(MNCalendarConfig mnCalendarConfig) {
@@ -100,9 +108,20 @@ public class MNCalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             myViewHolder.tvDay_lunar.setTextColor(mnCalendarConfig.getMnCalendar_colorLunar());
 
             //TODO:判断事件的展示
-            if (position == 3 || position == 10) {
-                myViewHolder.tv_event.setVisibility(View.VISIBLE);
-
+            if (mEventDatas != null && mEventDatas.size() > 0) {
+                for (int i = 0; i < mEventDatas.size(); i++) {
+                    MNCalendarEventModel mnCalendarEventModel = mEventDatas.get(i);
+                    Date eventDate = mnCalendarEventModel.getEventDate();
+                    String event_yyy_MM_dd = MNConst.sdf_yyy_MM_dd.format(eventDate);
+                    if (event_yyy_MM_dd.equals(position_yyy_MM_dd)) {
+                        myViewHolder.tv_event.setVisibility(View.VISIBLE);
+                        //动态修改颜色
+                        GradientDrawable myGrad = (GradientDrawable) myViewHolder.tv_event.getBackground();
+                        myGrad.setColor(Color.parseColor(mnCalendarEventModel.getEventBgColor()));
+                        myViewHolder.tv_event.setTextColor(Color.parseColor(mnCalendarEventModel.getEventTextColor()));
+                        myViewHolder.tv_event.setText(mnCalendarEventModel.getEventInfo());
+                    }
+                }
             }
 
             //不是本月的颜色变灰
@@ -157,7 +176,7 @@ public class MNCalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                     Date datePosition = mDatas.get(position);
                     if (onCalendarItemClickListener != null) {
-                        onCalendarItemClickListener.onClick(datePosition, null);
+                        onCalendarItemClickListener.onClick(datePosition);
                     }
 
                     if (selectedCalendar == null) {
@@ -169,7 +188,6 @@ public class MNCalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                     onCalendarSelectedChangeListener.onSelectedChange(selectedCalendar);
 
-                    lastSelectedPosition = position;
                 }
             });
 
@@ -179,7 +197,7 @@ public class MNCalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     if (onCalendarItemClickListener != null) {
                         Date datePosition = mDatas.get(position);
                         Lunar lunar = LunarCalendarUtils.solarToLunar(datePosition);
-                        onCalendarItemClickListener.onLongClick(datePosition, lunar);
+                        onCalendarItemClickListener.onLongClick(datePosition);
                     }
                     return true;
                 }

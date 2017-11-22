@@ -15,6 +15,7 @@ import com.maning.calendarlibrary.listeners.OnCalendarItemClickListener;
 import com.maning.calendarlibrary.listeners.OnCalendarSelectedChangeListener;
 import com.maning.calendarlibrary.model.Lunar;
 import com.maning.calendarlibrary.model.MNCalendarConfig;
+import com.maning.calendarlibrary.model.MNCalendarEventModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,6 +39,9 @@ public class MNCalendarMonthPagerView extends FrameLayout {
     private MNCalendarAdapter mnCalendarAdapter;
 
     private Calendar mSelectedCalendar;
+
+    //事件集合
+    private ArrayList<MNCalendarEventModel> mEventDatas;
 
     public MNCalendarMonthPagerView(@NonNull Context context) {
         this(context, null);
@@ -77,10 +81,18 @@ public class MNCalendarMonthPagerView extends FrameLayout {
         }
     }
 
-    public void setCurrentCalendar(Calendar calendar, MNCalendarConfig mnCalendarConfig) {
+    public void setCurrentCalendar(Calendar calendar, MNCalendarConfig mnCalendarConfig,ArrayList<MNCalendarEventModel> mEventDatas) {
         this.currentCalendar = calendar;
+        this.mEventDatas = mEventDatas;
         this.mnCalendarConfig = mnCalendarConfig;
         initAdapter();
+    }
+
+    public void updateEventDatas(ArrayList<MNCalendarEventModel> mEventDatas) {
+        this.mEventDatas = mEventDatas;
+        if (mnCalendarAdapter != null) {
+            mnCalendarAdapter.updateEventDatas(this.mEventDatas);
+        }
     }
 
     public void updateConfig(MNCalendarConfig mnCalendarConfig) {
@@ -110,20 +122,20 @@ public class MNCalendarMonthPagerView extends FrameLayout {
         }
 
         //设置Adapter
-        mnCalendarAdapter = new MNCalendarAdapter(mContext, mDatas, currentCalendar, mSelectedCalendar, mnCalendarConfig);
+        mnCalendarAdapter = new MNCalendarAdapter(mContext, mDatas, mEventDatas,currentCalendar, mSelectedCalendar, mnCalendarConfig);
         recyclerViewCalendarMonth.setAdapter(mnCalendarAdapter);
         mnCalendarAdapter.setOnCalendarItemClickListener(new OnCalendarItemClickListener() {
             @Override
-            public void onClick(Date date, Lunar lunar) {
+            public void onClick(Date date) {
                 if (onCalendarItemClickListener != null) {
-                    onCalendarItemClickListener.onClick(date, lunar);
+                    onCalendarItemClickListener.onClick(date);
                 }
             }
 
             @Override
-            public void onLongClick(Date date, Lunar lunar) {
+            public void onLongClick(Date date) {
                 if (onCalendarItemClickListener != null) {
-                    onCalendarItemClickListener.onLongClick(date, lunar);
+                    onCalendarItemClickListener.onLongClick(date);
                 }
             }
         });

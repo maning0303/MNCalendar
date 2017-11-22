@@ -12,16 +12,21 @@ import com.maning.calendarlibrary.listeners.OnCalendarChangeListener;
 import com.maning.calendarlibrary.listeners.OnCalendarItemClickListener;
 import com.maning.calendarlibrary.model.Lunar;
 import com.maning.calendarlibrary.model.MNCalendarConfig;
+import com.maning.calendarlibrary.model.MNCalendarEventModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private Context context;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
-    private SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat sdf_yyy_MM_dd = new SimpleDateFormat("yyyy-MM-dd");
     private MNCalendar mnCalendar;
+
+    //事件集合
+    private ArrayList<MNCalendarEventModel> mEventDatas = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,18 +43,16 @@ public class MainActivity extends AppCompatActivity {
         mnCalendar.setOnCalendarItemClickListener(new OnCalendarItemClickListener() {
 
             @Override
-            public void onClick(Date date, Lunar lunar) {
+            public void onClick(Date date) {
                 //Toast日期
-//                String launarString = lunar.lunarYear + "-" + lunar.lunarMonth + "-" + lunar.lunarDay;
-//                ToastUtil.showToast(context, "单击:阳历:" + sdf2.format(date) + ",阴历:" + launarString);
+//                ToastUtil.showToast(context, "单击:" + sdf_yyy_MM_dd.format(date));
 
             }
 
             @Override
-            public void onLongClick(Date date, Lunar lunar) {
+            public void onLongClick(Date date) {
                 //Toast日期
-//                String launarString = lunar.lunarYear + "-" + lunar.lunarMonth + "-" + lunar.lunarDay;
-//                ToastUtil.showToast(context, "长按:阳历:" + sdf2.format(date) + ",阴历:" + launarString);
+//                ToastUtil.showToast(context, "长按:" + sdf_yyy_MM_dd.format(date));
             }
         });
 
@@ -59,10 +62,44 @@ public class MainActivity extends AppCompatActivity {
         mnCalendar.setOnCalendarChangeListener(new OnCalendarChangeListener() {
             @Override
             public void onPageChange(Date date) {
-                String format = sdf.format(date);
-//                ToastUtil.showToast(context, format);
+//                ToastUtil.showToast(context, sdf.format(date));
             }
         });
+
+        try {
+            MNCalendarEventModel mnCalendarEventModel = new MNCalendarEventModel();
+            mnCalendarEventModel.setEventDate(sdf_yyy_MM_dd.parse("2017-11-22"));
+            mnCalendarEventModel.setEventInfo("班");
+            mnCalendarEventModel.setEventBgColor("#FF00FF");
+            mnCalendarEventModel.setEventTextColor("#FFFFFF");
+            mEventDatas.add(mnCalendarEventModel);
+
+            mnCalendarEventModel = new MNCalendarEventModel();
+            mnCalendarEventModel.setEventDate(sdf_yyy_MM_dd.parse("2017-11-08"));
+            mnCalendarEventModel.setEventInfo("议");
+            mnCalendarEventModel.setEventBgColor("#FF0000");
+            mnCalendarEventModel.setEventTextColor("#FFFFFF");
+            mEventDatas.add(mnCalendarEventModel);
+
+            mnCalendarEventModel = new MNCalendarEventModel();
+            mnCalendarEventModel.setEventDate(sdf_yyy_MM_dd.parse("2017-10-29"));
+            mnCalendarEventModel.setEventInfo("假");
+            mnCalendarEventModel.setEventBgColor("#0000FF");
+            mnCalendarEventModel.setEventTextColor("#FFFFFF");
+            mEventDatas.add(mnCalendarEventModel);
+
+            mnCalendarEventModel = new MNCalendarEventModel();
+            mnCalendarEventModel.setEventDate(sdf_yyy_MM_dd.parse("2018-01-25"));
+            mnCalendarEventModel.setEventInfo("差");
+            mnCalendarEventModel.setEventBgColor("#000000");
+            mnCalendarEventModel.setEventTextColor("#FFFFFF");
+            mEventDatas.add(mnCalendarEventModel);
+
+            mnCalendar.setEventDatas(mEventDatas);
+        } catch (Exception e) {
+
+        }
+
 
     }
 
