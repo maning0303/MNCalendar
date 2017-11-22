@@ -13,8 +13,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_margin="2dp"
-            android:adjustViewBounds="true"
-            android:background="@drawable/mn_today_bg" />
+            android:adjustViewBounds="true" />
 
     </RelativeLayout>
 
@@ -28,7 +27,7 @@
             android:id="@+id/tvDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
+            android:text="10"
             android:textColor="@color/mn_calendar_color_text_solar"
             android:textSize="16sp" />
 
@@ -44,6 +43,18 @@
 
 
     </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_event"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/mn_item_event_bg"
+        android:gravity="center"
+        android:text="假"
+        android:textColor="#FFFFFF"
+        android:textSize="8sp" />
 
 
 </RelativeLayout>

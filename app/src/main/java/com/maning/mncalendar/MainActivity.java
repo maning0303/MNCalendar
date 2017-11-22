@@ -40,16 +40,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(Date date, Lunar lunar) {
                 //Toast日期
-                String launarString = lunar.lunarYear + "-" + lunar.lunarMonth + "-" + lunar.lunarDay;
-                ToastUtil.showToast(context, "单击:阳历:" + sdf2.format(date) + ",阴历:" + launarString);
+//                String launarString = lunar.lunarYear + "-" + lunar.lunarMonth + "-" + lunar.lunarDay;
+//                ToastUtil.showToast(context, "单击:阳历:" + sdf2.format(date) + ",阴历:" + launarString);
 
             }
 
             @Override
             public void onLongClick(Date date, Lunar lunar) {
                 //Toast日期
-                String launarString = lunar.lunarYear + "-" + lunar.lunarMonth + "-" + lunar.lunarDay;
-                ToastUtil.showToast(context, "长按:阳历:" + sdf2.format(date) + ",阴历:" + launarString);
+//                String launarString = lunar.lunarYear + "-" + lunar.lunarMonth + "-" + lunar.lunarDay;
+//                ToastUtil.showToast(context, "长按:阳历:" + sdf2.format(date) + ",阴历:" + launarString);
             }
         });
 
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageChange(Date date) {
                 String format = sdf.format(date);
-                ToastUtil.showToast(context, format);
+//                ToastUtil.showToast(context, format);
             }
         });
 

@@ -8,11 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.maning.calendarlibrary.R;
 import com.maning.calendarlibrary.adapter.MNCalendarAdapter;
 import com.maning.calendarlibrary.listeners.OnCalendarItemClickListener;
+import com.maning.calendarlibrary.listeners.OnCalendarSelectedChangeListener;
 import com.maning.calendarlibrary.model.Lunar;
 import com.maning.calendarlibrary.model.MNCalendarConfig;
 
@@ -33,6 +33,7 @@ public class MNCalendarMonthPagerView extends FrameLayout {
     private MNCalendarConfig mnCalendarConfig = new MNCalendarConfig.Builder().build();
     //Item点击监听
     private OnCalendarItemClickListener onCalendarItemClickListener;
+    private OnCalendarSelectedChangeListener onCalendarSelectedChangeListener;
 
     private MNCalendarAdapter mnCalendarAdapter;
 
@@ -64,7 +65,14 @@ public class MNCalendarMonthPagerView extends FrameLayout {
 
     public void setSelectedCalendar(Calendar mSelectedCalendar) {
         this.mSelectedCalendar = mSelectedCalendar;
-        if(mnCalendarAdapter != null){
+        if (mnCalendarAdapter != null) {
+            mnCalendarAdapter.setSelectedCalendar(this.mSelectedCalendar);
+        }
+    }
+
+    public void updateSelectedCalendar(Calendar mSelectedCalendar) {
+        this.mSelectedCalendar = mSelectedCalendar;
+        if (mnCalendarAdapter != null && mSelectedCalendar != null) {
             mnCalendarAdapter.updateSelectedCalendar(this.mSelectedCalendar);
         }
     }
@@ -77,7 +85,7 @@ public class MNCalendarMonthPagerView extends FrameLayout {
 
     public void updateConfig(MNCalendarConfig mnCalendarConfig) {
         this.mnCalendarConfig = mnCalendarConfig;
-        if(mnCalendarAdapter != null){
+        if (mnCalendarAdapter != null) {
             mnCalendarAdapter.updateConfig(this.mnCalendarConfig);
         }
     }
@@ -119,6 +127,14 @@ public class MNCalendarMonthPagerView extends FrameLayout {
                 }
             }
         });
+        mnCalendarAdapter.setOnCalendarSelectedChangeListener(new OnCalendarSelectedChangeListener() {
+            @Override
+            public void onSelectedChange(Calendar selectedCalendar) {
+                if (onCalendarSelectedChangeListener != null) {
+                    onCalendarSelectedChangeListener.onSelectedChange(selectedCalendar);
+                }
+            }
+        });
     }
 
     /**
@@ -128,6 +144,10 @@ public class MNCalendarMonthPagerView extends FrameLayout {
      */
     public void setOnCalendarItemClickListener(OnCalendarItemClickListener onCalendarItemClickListener) {
         this.onCalendarItemClickListener = onCalendarItemClickListener;
+    }
+
+    public void setOnCalendarSelectedChangeListener(OnCalendarSelectedChangeListener onCalendarSelectedChangeListener) {
+        this.onCalendarSelectedChangeListener = onCalendarSelectedChangeListener;
     }
 
 }

@@ -1,6 +1,8 @@
 package com.maning.calendarlibrary;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -14,6 +16,8 @@ import android.widget.TextView;
 import com.maning.calendarlibrary.constant.MNConst;
 import com.maning.calendarlibrary.listeners.OnCalendarChangeListener;
 import com.maning.calendarlibrary.listeners.OnCalendarItemClickListener;
+import com.maning.calendarlibrary.listeners.OnCalendarSelectedChangeListener;
+import com.maning.calendarlibrary.model.Lunar;
 import com.maning.calendarlibrary.model.MNCalendarConfig;
 import com.maning.calendarlibrary.view.MNCalendarMonthPagerView;
 
@@ -27,6 +31,9 @@ import java.util.Date;
  */
 
 public class MNCalendar extends LinearLayout implements View.OnClickListener {
+
+
+    private Handler handler = new Handler();
 
     private Context context;
 
@@ -51,7 +58,7 @@ public class MNCalendar extends LinearLayout implements View.OnClickListener {
     /**
      * 保存选中的日期
      */
-    private Calendar mSelectedCalendar = Calendar.getInstance();
+    private Calendar mSelectedCalendar;
     //最小年
     private int minYear = 1900;
     //最大支持的年份
@@ -196,7 +203,6 @@ public class MNCalendar extends LinearLayout implements View.OnClickListener {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
     }
@@ -230,7 +236,77 @@ public class MNCalendar extends LinearLayout implements View.OnClickListener {
             MNCalendarMonthPagerView calendarMonthPagerView = new MNCalendarMonthPagerView(context);
             calendarMonthPagerView.setCurrentCalendar(calendar, mnCalendarConfig);
             calendarMonthPagerView.setTag(position);
-            calendarMonthPagerView.setOnCalendarItemClickListener(onCalendarItemClickListener);
+            calendarMonthPagerView.setSelectedCalendar(mSelectedCalendar);
+            calendarMonthPagerView.setOnCalendarItemClickListener(new OnCalendarItemClickListener() {
+                @Override
+                public void onClick(Date date, Lunar lunar) {
+                    if (onCalendarItemClickListener != null) {
+                        onCalendarItemClickListener.onClick(date, lunar);
+                    }
+                }
+
+                @Override
+                public void onLongClick(Date date, Lunar lunar) {
+                    if (onCalendarItemClickListener != null) {
+                        onCalendarItemClickListener.onLongClick(date, lunar);
+                    }
+                }
+            });
+            calendarMonthPagerView.setOnCalendarSelectedChangeListener(new OnCalendarSelectedChangeListener() {
+                @Override
+                public void onSelectedChange(Calendar selectedCalendar) {
+                    if (selectedCalendar == null) {
+                        return;
+                    }
+                    //改变选中的
+                    mSelectedCalendar = selectedCalendar;
+
+                    //刷新ViewPager页面
+                    for (int i = 0; i < viewPagerCalendar.getChildCount(); i++) {
+                        MNCalendarMonthPagerView view = (MNCalendarMonthPagerView) viewPagerCalendar.getChildAt(i);
+                        if (view != null) {
+                            view.setSelectedCalendar(mSelectedCalendar);
+                        }
+                    }
+
+                    //判断是不是本月
+                    Date date = mSelectedCalendar.getTime();
+                    Date currentDate = currentCalendar.getTime();
+                    if (date.getMonth() != currentDate.getMonth()) {
+                        if (date.getMonth() < currentDate.getMonth() && date.getYear() <= currentDate.getYear()) {
+                            MNCalendarMonthPagerView view = (MNCalendarMonthPagerView) viewPagerCalendar.findViewWithTag(viewPagerCalendar.getCurrentItem() - 1);
+                            if (view != null) {
+                                view.updateSelectedCalendar(mSelectedCalendar);
+                            }
+                            //上个月
+                            setLastMonth();
+                        } else {
+                            MNCalendarMonthPagerView view = (MNCalendarMonthPagerView) viewPagerCalendar.findViewWithTag(viewPagerCalendar.getCurrentItem() + 1);
+                            if (view != null) {
+                                view.updateSelectedCalendar(mSelectedCalendar);
+                            }
+                            //跳转下一个月
+                            setNextMonth();
+                        }
+                    }
+
+                    //延时刷新
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //刷新ViewPager页面
+                            for (int i = 0; i < viewPagerCalendar.getChildCount(); i++) {
+                                MNCalendarMonthPagerView view = (MNCalendarMonthPagerView) viewPagerCalendar.getChildAt(i);
+                                if (view != null) {
+                                    view.updateSelectedCalendar(mSelectedCalendar);
+                                }
+                            }
+                        }
+                    }, 200);
+
+
+                }
+            });
             container.addView(calendarMonthPagerView);
             return calendarMonthPagerView;
         }
@@ -320,19 +396,12 @@ public class MNCalendar extends LinearLayout implements View.OnClickListener {
         this.mnCalendarConfig = config;
         drawTitleViews();
         //刷新ViewPager页面
-        MNCalendarMonthPagerView viewCurrent = (MNCalendarMonthPagerView) viewPagerCalendar.findViewWithTag(viewPagerCalendar.getCurrentItem());
-        MNCalendarMonthPagerView viewLast = (MNCalendarMonthPagerView) viewPagerCalendar.findViewWithTag(viewPagerCalendar.getCurrentItem() - 1);
-        MNCalendarMonthPagerView viewNext = (MNCalendarMonthPagerView) viewPagerCalendar.findViewWithTag(viewPagerCalendar.getCurrentItem() + 1);
-        if (viewCurrent != null) {
-            viewCurrent.updateConfig(mnCalendarConfig);
+        for (int i = 0; i < viewPagerCalendar.getChildCount(); i++) {
+            MNCalendarMonthPagerView view = (MNCalendarMonthPagerView) viewPagerCalendar.getChildAt(i);
+            if (view != null) {
+                view.updateConfig(mnCalendarConfig);
+            }
         }
-        if (viewLast != null) {
-            viewLast.updateConfig(mnCalendarConfig);
-        }
-        if (viewNext != null) {
-            viewNext.updateConfig(mnCalendarConfig);
-        }
-
     }
 
     @Override
