@@ -265,16 +265,16 @@ public class MNCalendar extends LinearLayout implements View.OnClickListener {
             calendarMonthPagerView.setSelectedCalendar(mSelectedCalendar);
             calendarMonthPagerView.setOnCalendarItemClickListener(new OnCalendarItemClickListener() {
                 @Override
-                public void onClick(Date date, Lunar lunar) {
+                public void onClick(Date date) {
                     if (onCalendarItemClickListener != null) {
-                        onCalendarItemClickListener.onClick(date, lunar);
+                        onCalendarItemClickListener.onClick(date);
                     }
                 }
 
                 @Override
-                public void onLongClick(Date date, Lunar lunar) {
+                public void onLongClick(Date date) {
                     if (onCalendarItemClickListener != null) {
-                        onCalendarItemClickListener.onLongClick(date, lunar);
+                        onCalendarItemClickListener.onLongClick(date);
                     }
                 }
             });
