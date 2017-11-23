@@ -1,11 +1,13 @@
 package com.maning.calendarlibrary;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -36,6 +38,7 @@ import java.util.Date;
 public class MNCalendar extends LinearLayout implements View.OnClickListener {
 
 
+    private static final String TAG = "MNCalendar";
     private Handler handler = new Handler();
 
     private Context context;
@@ -92,6 +95,14 @@ public class MNCalendar extends LinearLayout implements View.OnClickListener {
         super(context, attrs, defStyleAttr);
         this.context = context;
 
+        //自定义属性获取
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MNCalendar);
+        maxYear = ta.getInteger(R.styleable.MNCalendar_mnCalendar_maxYear, 2100);
+        minYear = ta.getInteger(R.styleable.MNCalendar_mnCalendar_minYear, 1900);
+        ta.recycle();
+
+        Log.e(TAG, "maxYear : " + maxYear + " , minYear : " + minYear);
+
         //初始化相关
         init();
     }
@@ -119,7 +130,7 @@ public class MNCalendar extends LinearLayout implements View.OnClickListener {
 
     public void setEventDatas(ArrayList<MNCalendarEventModel> mEventDatas) throws ParseException {
         this.mEventDatas = mEventDatas;
-        if(this.mEventDatas == null){
+        if (this.mEventDatas == null) {
             this.mEventDatas = new ArrayList<>();
         }
 
