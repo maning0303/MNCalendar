@@ -13,6 +13,7 @@ import com.maning.calendarlibrary.listeners.OnCalendarItemClickListener;
 import com.maning.calendarlibrary.model.Lunar;
 import com.maning.calendarlibrary.model.MNCalendarConfig;
 import com.maning.calendarlibrary.model.MNCalendarEventModel;
+import com.maning.calendarlibrary.utils.LunarCalendarUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,8 +22,8 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private Context context;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
-    private SimpleDateFormat sdf_yyy_MM_dd = new SimpleDateFormat("yyyy-MM-dd");
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+    private static final SimpleDateFormat sdf_yyy_MM_dd = new SimpleDateFormat("yyyy-MM-dd");
     private MNCalendar mnCalendar;
 
     //事件集合
@@ -44,15 +45,15 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(Date date) {
-                //Toast日期
-//                ToastUtil.showToast(context, "单击:" + sdf_yyy_MM_dd.format(date));
+                //Toast日期----阴历可以自己转:LunarCalendarUtils.solarToLunar(date);
+                ToastUtil.showToast(context, "单击:" + sdf_yyy_MM_dd.format(date));
 
             }
 
             @Override
             public void onLongClick(Date date) {
-                //Toast日期
-//                ToastUtil.showToast(context, "长按:" + sdf_yyy_MM_dd.format(date));
+                //Toast日期----阴历可以自己转:LunarCalendarUtils.solarToLunar(date);
+                ToastUtil.showToast(context, "长按:" + sdf_yyy_MM_dd.format(date));
             }
         });
 
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         mnCalendar.setOnCalendarChangeListener(new OnCalendarChangeListener() {
             @Override
             public void onPageChange(Date date) {
-//                ToastUtil.showToast(context, sdf.format(date));
+                ToastUtil.showToast(context, sdf.format(date));
             }
         });
 
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             mnCalendarEventModel.setEventBgColor("#000000");
             mnCalendarEventModel.setEventTextColor("#FFFFFF");
             mEventDatas.add(mnCalendarEventModel);
-
+            //设置事件
             mnCalendar.setEventDatas(mEventDatas);
         } catch (Exception e) {
 
@@ -139,16 +140,27 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_03:
                 //改变样式配置
                 MNCalendarConfig build = new MNCalendarConfig.Builder()
+                        //星期的文字颜色
                         .setMnCalendar_colorWeek("#00ff00")
+                        //阴历的颜色
                         .setMnCalendar_colorLunar("#FF0000")
+                        //阳历的颜色
                         .setMnCalendar_colorSolar("#9BCCAF")
+                        //今天的背景色
                         .setMnCalendar_colorTodayBg("#00FFFF")
+                        //今天的文字颜色
                         .setMnCalendar_colorTodayText("#000000")
+                        //不是本月的文字颜色
                         .setMnCalendar_colorOtherMonth("#F1EDBD")
+                        //标题的颜色
                         .setMnCalendar_colorTitle("#FF0000")
+                        //选中日期的背景色
                         .setMnCalendar_colorSelected("#FFFF00")
+                        //是否显示阴历
                         .setMnCalendar_showLunar(true)
+                        //是否显示标题
                         .setMnCalendar_showWeek(true)
+                        //显示标题的样式
                         .setMnCalendar_TitleDateFormat("yyyy年MM月")
                         .build();
                 mnCalendar.setConfig(build);
