@@ -4,10 +4,9 @@
 
 ## 截图
 ### 水平方向日历
-![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/mncalendar_gif01.gif)
-<br>
-![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_001.png)
-![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/calendar_002.png)
+![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/mn_calendar_001.jpg)
+![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/mn_calendar_002.jpg)
+![](https://github.com/maning0303/MNCalendar/raw/master/screenshots/mn_calendar_003.jpg)
 
 ### 垂直方向日历
 
@@ -33,7 +32,7 @@
 #### 2.在app目录下的build.gradle中添加依赖
 ``` gradle
 	dependencies {
-	     compile 'com.github.maning0303:MNCalendar:V1.0.2'
+	     compile 'com.github.maning0303:MNCalendar:V1.0.3'
 	}
 ```
 
@@ -51,10 +50,20 @@
 ### 1:XML添加:
 ``` java
 
+    //相关自定义属性
+    <declare-styleable name="MNCalendar">
+            <!--最大支持的年数:不包括当前年-->
+            <attr name="mnCalendar_maxYear" format="integer" />
+            <!--最小支持的年数：包括当前年-->
+            <attr name="mnCalendar_minYear" format="integer" />
+    </declare-styleable>
+
     <com.maning.calendarlibrary.MNCalendar
         android:id="@+id/mnCalendar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:mnCalendar_maxYear="2101"
+        app:mnCalendar_minYear="1900" />
 
 ```
 
@@ -68,18 +77,16 @@
         mnCalendar.setOnCalendarItemClickListener(new OnCalendarItemClickListener() {
 
             @Override
-            public void onClick(Date date, Lunar lunar) {
-                //阳历转换阴历
-                //Lunar solarToLunar = LunarCalendarUtils.solarToLunar(date);
+            public void onClick(Date date) {
+                //Toast日期----阴历可以自己转:LunarCalendarUtils.solarToLunar(date);
+                ToastUtil.showToast(context, "单击:" + sdf_yyy_MM_dd.format(date));
 
-                //Toast日期
-                String launarString = lunar.lunarYear + "-" + lunar.lunarMonth + "-" + lunar.lunarDay;
-                Toast.makeText(context, "单击:\n阳历:" + sdf2.format(date) + "\n阴历:" + launarString, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onLongClick(Date date) {
-                Toast.makeText(context, "长按:" + sdf2.format(date), Toast.LENGTH_SHORT).show();
+                //Toast日期----阴历可以自己转:LunarCalendarUtils.solarToLunar(date);
+                ToastUtil.showToast(context, "长按:" + sdf_yyy_MM_dd.format(date));
             }
         });
 
@@ -88,49 +95,73 @@
          */
         mnCalendar.setOnCalendarChangeListener(new OnCalendarChangeListener() {
             @Override
-            public void lastMonth() {
-                Toast.makeText(context, sdf.format(mnCalendar.getCurrentDate()), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void nextMonth() {
-                Toast.makeText(context, sdf.format(mnCalendar.getCurrentDate()), Toast.LENGTH_SHORT).show();
+            public void onPageChange(Date date) {
+                ToastUtil.showToast(context, sdf.format(date));
             }
         });
-
-    /**
-     * 日历改变监听
-     */
-    mnCalendar.setOnCalendarChangeListener(new OnCalendarChangeListener() {
-        @Override
-        public void lastMonth() {
-            Toast.makeText(context, sdf.format(mnCalendar.getCurrentDate()), Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void nextMonth() {
-            Toast.makeText(context, sdf.format(mnCalendar.getCurrentDate()), Toast.LENGTH_SHORT).show();
-        }
-    });
 
 
     /**
      *  自定义设置相关
      */
     MNCalendarConfig build = new MNCalendarConfig.Builder()
-                            .setMnCalendar_colorWeek("#00ff00")         //星期栏的文字的颜色
-                            .setMnCalendar_colorLunar("#FF0000")        //阴历的文字的颜色
-                            .setMnCalendar_colorSolar("#9BCCAF")        //阳历的文字的颜色
-                            .setMnCalendar_colorTodayBg("#00FFFF")      //今天圆形背景的颜色
-                            .setMnCalendar_colorTodayText("#000000")    //今天文字的颜色
-                            .setMnCalendar_colorOtherMonth("#F1EDBD")   //不是本月的文字颜色
-                            .setMnCalendar_colorTitle("#FF0000")        //标题的颜色(包括文字和左右箭头)
-                            .setMnCalendar_showLunar(true)              //是不是显示阴历
-                            .setMnCalendar_showWeek(true)               //是不是显示星期栏
-                            .setMnCalendar_showTitle(true)              //是不是显示标题栏
-                            .setMnCalendar_TitleDateFormat("yyyy年MM月") //标题样式(默认:yyyy-MM)
-                            .build();
+            //星期的文字颜色
+            .setMnCalendar_colorWeek("#00ff00")
+            //阴历的颜色
+            .setMnCalendar_colorLunar("#FF0000")
+            //阳历的颜色
+            .setMnCalendar_colorSolar("#9BCCAF")
+            //今天的背景色
+            .setMnCalendar_colorTodayBg("#00FFFF")
+            //今天的文字颜色
+            .setMnCalendar_colorTodayText("#000000")
+            //不是本月的文字颜色
+            .setMnCalendar_colorOtherMonth("#F1EDBD")
+            //标题的颜色
+            .setMnCalendar_colorTitle("#FF0000")
+            //选中日期的背景色
+            .setMnCalendar_colorSelected("#FFFF00")
+            //是否显示阴历
+            .setMnCalendar_showLunar(true)
+            //是否显示标题
+            .setMnCalendar_showWeek(true)
+            //显示标题的样式
+            .setMnCalendar_TitleDateFormat("yyyy年MM月")
+            .build();
     mnCalendar.setConfig(build);
+
+
+    //设置日历相关事件
+    ArrayList<MNCalendarEventModel> mEventDatas = new ArrayList<>();
+    MNCalendarEventModel mnCalendarEventModel = new MNCalendarEventModel();
+    mnCalendarEventModel.setEventDate(sdf_yyy_MM_dd.parse("2017-11-22"));
+    mnCalendarEventModel.setEventInfo("班");
+    mnCalendarEventModel.setEventBgColor("#FF00FF");
+    mnCalendarEventModel.setEventTextColor("#FFFFFF");
+    mEventDatas.add(mnCalendarEventModel);
+
+    mnCalendarEventModel = new MNCalendarEventModel();
+    mnCalendarEventModel.setEventDate(sdf_yyy_MM_dd.parse("2017-11-08"));
+    mnCalendarEventModel.setEventInfo("议");
+    mnCalendarEventModel.setEventBgColor("#FF0000");
+    mnCalendarEventModel.setEventTextColor("#FFFFFF");
+    mEventDatas.add(mnCalendarEventModel);
+
+    mnCalendarEventModel = new MNCalendarEventModel();
+    mnCalendarEventModel.setEventDate(sdf_yyy_MM_dd.parse("2017-10-29"));
+    mnCalendarEventModel.setEventInfo("假");
+    mnCalendarEventModel.setEventBgColor("#0000FF");
+    mnCalendarEventModel.setEventTextColor("#FFFFFF");
+    mEventDatas.add(mnCalendarEventModel);
+
+    mnCalendarEventModel = new MNCalendarEventModel();
+    mnCalendarEventModel.setEventDate(sdf_yyy_MM_dd.parse("2018-01-25"));
+    mnCalendarEventModel.setEventInfo("差");
+    mnCalendarEventModel.setEventBgColor("#000000");
+    mnCalendarEventModel.setEventTextColor("#FFFFFF");
+    mEventDatas.add(mnCalendarEventModel);
+    //设置事件
+    mnCalendar.setEventDatas(mEventDatas);
 
 ```
 
@@ -192,6 +223,17 @@
 
 
 ## 更新日志:
+#### TODO ：下一版本计划
+        1:去掉RecyclerView 使用View绘制每月
+        2:优化卡顿
+
+#### V1.0.3:
+        1:水平日历单选去掉阴历返回（返回后自己转换，提供转换方法）
+        2:水平方向切换使用ViewPager
+        3:增加日历点击效果
+        4:增加日历事件集合
+        5:自定义属性最大最小年支持
+
 #### V1.0.2:
         1:水平日历单选增加阴历返回
         2:水平日历标题样式增加自定义
@@ -201,3 +243,4 @@
 
 ## 感谢：
 #### [OneCalendarView](https://github.com/MorochoRochaDarwin/OneCalendarView)
+#### [CalendarView](https://github.com/huanghaibin-dev/CalendarView)
